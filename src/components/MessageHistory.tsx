@@ -29,7 +29,7 @@ export function MessageHistory() {
 
   const fetchMessages = async () => {
     try {
-      const response = await fetch("/api/messages");
+      const response = await fetch("/api/messages?limit=5");
       const data = await response.json();
 
       if (data.success) {
@@ -147,7 +147,7 @@ export function MessageHistory() {
 
             <div className="flex items-center gap-1 text-xs text-gray-500">
               <Clock className="h-3 w-3" />
-              {new Date(message.timestamp).toLocaleString()}
+              {message.timestamp.toLocaleString()}
             </div>
           </CardContent>
         </Card>
