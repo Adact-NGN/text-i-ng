@@ -1,0 +1,121 @@
+// Version management system following conventional commits format
+// Format: major.minor.patch-prerelease
+
+export interface VersionInfo {
+  version: string;
+  buildDate: string;
+  changes: string[];
+}
+
+// Current version - update this with each significant change
+// Following Semantic Versioning (SemVer):
+// MAJOR.MINOR.PATCH
+// MAJOR: Breaking changes, irreversible changes
+// MINOR: New features, backward compatible
+// PATCH: Bug fixes, config changes, minor updates
+export const CURRENT_VERSION: VersionInfo = {
+  version: "0.6.0",
+  buildDate: "2024-01-15",
+  changes: [
+    "feat: add Azure AD (Microsoft Entra ID) authentication",
+    "feat: add separate login page with professional design",
+    "feat: add user session management and logout functionality",
+    "feat: add authentication middleware and route protection",
+    "feat: add user menu with profile and logout options",
+    "feat: add comprehensive error handling for authentication",
+    "feat: move logo and branding to header bar",
+    "feat: add NG Nordic logo and rebrand to TextiNG",
+    "feat: add support for multiple phone numbers (comma/semicolon separated)",
+    "feat: add batch SMS processing with individual result tracking",
+    "feat: add version management system with conventional commits",
+    "feat: add version display component with change history",
+    "feat: implement Twilio alphanumeric sender ID support",
+    "feat: add real-time message history updates",
+    "feat: add comprehensive message storage system",
+    "feat: add bulk SMS with sender ID support",
+    "feat: add message validation and error handling",
+    "feat: add from name field for personalized messaging",
+    "feat: add message history with database integration",
+    "feat: add bulk SMS upload with Excel support",
+    "feat: add Twilio SMS integration",
+    "feat: initial SMS application setup",
+  ],
+};
+
+// Version history for reference
+export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.6.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: add Azure AD (Microsoft Entra ID) authentication",
+      "feat: add separate login page with professional design",
+      "feat: add user session management and logout functionality",
+      "feat: add authentication middleware and route protection",
+      "feat: add user menu with profile and logout options",
+      "feat: add comprehensive error handling for authentication",
+    ],
+  },
+  {
+    version: "0.5.1",
+    buildDate: "2024-01-15",
+    changes: ["feat: move logo and branding to header bar"],
+  },
+  {
+    version: "0.5.0",
+    buildDate: "2024-01-15",
+    changes: ["feat: add NG Nordic logo and rebrand to TextiNG"],
+  },
+  {
+    version: "0.4.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: add support for multiple phone numbers (comma/semicolon separated)",
+      "feat: add batch SMS processing with individual result tracking",
+    ],
+  },
+  {
+    version: "0.3.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: add version management system with conventional commits",
+      "feat: add version display component with change history",
+    ],
+  },
+  {
+    version: "0.2.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: implement Twilio alphanumeric sender ID support",
+      "feat: add real-time message history updates",
+      "feat: add comprehensive message storage system",
+    ],
+  },
+  {
+    version: "0.1.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: add from name field for personalized messaging",
+      "feat: add message history with database integration",
+      "feat: add real-time UI updates",
+      "feat: add bulk SMS upload with Excel support",
+      "feat: add Twilio SMS integration",
+      "feat: initial SMS application setup",
+    ],
+  },
+];
+
+// Helper function to get version display string
+export const getVersionDisplay = (): string => {
+  return `v${CURRENT_VERSION.version}`;
+};
+
+// Helper function to get full version info
+export const getFullVersionInfo = (): VersionInfo => {
+  return CURRENT_VERSION;
+};
+
+// Helper function to get recent changes
+export const getRecentChanges = (count: number = 5): string[] => {
+  return CURRENT_VERSION.changes.slice(0, count);
+};
