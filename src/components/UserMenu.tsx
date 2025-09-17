@@ -47,7 +47,9 @@ export function UserMenu() {
           </div>
         )}
         <span className="hidden sm:block font-medium text-sm">
-          {session.user?.name?.split(' ')[0] || session.user?.email?.split('@')[0] || "User"}
+          {session.user?.name?.split(" ")[0] ||
+            session.user?.email?.split("@")[0] ||
+            "User"}
         </span>
         <svg
           className={`w-4 h-4 transition-transform ${
@@ -81,52 +83,50 @@ export function UserMenu() {
                 <p className="text-sm font-medium text-popover-foreground">
                   {session.user?.name || "User"}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">{session.user?.email}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {session.user?.email}
+                </p>
               </div>
 
               <Link
                 href="/profile"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-left px-4 py-3 text-sm text-popover-foreground hover:bg-accent focus:outline-none focus:bg-accent transition-colors"
+                className="flex items-center w-full px-4 py-3 text-sm text-popover-foreground hover:bg-accent focus:outline-none focus:bg-accent transition-colors"
               >
-                <div className="flex items-center">
-                  <svg
-                    className="w-4 h-4 mr-3 text-muted-foreground flex-shrink-0 self-center"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  <span className="font-medium">View Profile</span>
-                </div>
+                <svg
+                  className="w-4 h-4 mr-3 text-muted-foreground"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+                <span className="font-medium">View Profile</span>
               </Link>
 
               <button
                 onClick={handleSignOut}
-                className="w-full text-left px-4 py-3 text-sm text-popover-foreground hover:bg-accent focus:outline-none focus:bg-accent transition-colors"
+                className="flex items-center w-full px-4 py-3 text-sm text-popover-foreground hover:bg-accent focus:outline-none focus:bg-accent transition-colors"
               >
-                <div className="flex items-center">
-                  <svg
-                    className="w-4 h-4 mr-3 text-muted-foreground flex-shrink-0 self-center"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-                  <span className="font-medium">Sign out</span>
-                </div>
+                <svg
+                  className="w-4 h-4 mr-3 text-muted-foreground"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
+                <span className="font-medium">Sign out</span>
               </button>
             </div>
           </div>
