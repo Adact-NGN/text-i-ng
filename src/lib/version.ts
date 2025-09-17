@@ -14,9 +14,11 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.6.4",
+  version: "0.6.5",
   buildDate: "2024-01-15",
   changes: [
+    "feat: remove NG Nordic TextiNG logo from header and login page",
+    "feat: clean up branding elements for simplified design",
     "feat: add sparkle emoji and hover animation to welcome text",
     "feat: enhance login page interactivity with hover effects",
     "fix: make animated background full viewport width and height",
@@ -61,6 +63,14 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.6.5",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: remove NG Nordic TextiNG logo from header and login page",
+      "feat: clean up branding elements for simplified design",
+    ],
+  },
   {
     version: "0.6.4",
     buildDate: "2024-01-15",

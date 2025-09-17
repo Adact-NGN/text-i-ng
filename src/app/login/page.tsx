@@ -99,9 +99,6 @@ export default function LoginPage() {
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-md px-6">
-        <div className="flex justify-center mb-8 transform hover:scale-105 transition-transform duration-300">
-          <Logo size="lg" />
-        </div>
         <div className="text-center space-y-4">
           <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in hover:scale-105 transition-transform duration-300">
             Welcome to TextiNG ✨
