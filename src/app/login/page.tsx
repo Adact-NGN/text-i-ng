@@ -16,10 +16,15 @@ export default function LoginPage() {
   useEffect(() => {
     // Check if user is already authenticated
     const checkSession = async () => {
-      const session = await getSession();
-      if (session) {
-        // Force a hard redirect to ensure we leave the login page
-        window.location.href = "/";
+      try {
+        const session = await getSession();
+        if (session) {
+          // Use router.push for better navigation handling
+          router.push("/");
+          router.refresh();
+        }
+      } catch (error) {
+        console.error("Session check failed:", error);
       }
     };
     
@@ -27,7 +32,7 @@ export default function LoginPage() {
     checkSession();
     
     // Also check periodically in case session is established after page load
-    const interval = setInterval(checkSession, 1000);
+    const interval = setInterval(checkSession, 2000);
     
     return () => clearInterval(interval);
   }, [router]);
@@ -69,9 +74,11 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError("Authentication failed. Please try again.");
+        console.error("Authentication error:", result.error);
       } else if (result?.ok) {
-        // Force a page reload to ensure session is properly established
-        window.location.href = "/";
+        // Use router for better navigation
+        router.push("/");
+        router.refresh();
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");

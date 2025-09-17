@@ -123,7 +123,7 @@ const handler = NextAuth({
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // If user is trying to access login page, redirect to home
+      // If user is trying to access login page and is already authenticated, redirect to home
       if (url.includes('/login')) {
         return baseUrl;
       }
@@ -136,6 +136,11 @@ const handler = NextAuth({
       // If it's the same origin, allow it
       if (url.startsWith(baseUrl)) {
         return url;
+      }
+      
+      // For external URLs, redirect to home
+      if (url.startsWith('http')) {
+        return baseUrl;
       }
       
       // Default to home page
