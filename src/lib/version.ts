@@ -14,9 +14,14 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.6.0",
+  version: "0.6.1",
   buildDate: "2024-01-15",
   changes: [
+    "fix: resolve login loop issues in Vercel deployment",
+    "fix: improve NextAuth redirect logic for external URLs",
+    "fix: update middleware configuration for better Vercel compatibility",
+    "fix: replace window.location.href with router.push for better navigation",
+    "fix: add proper error handling and session management",
     "feat: add Azure AD (Microsoft Entra ID) authentication",
     "feat: add separate login page with professional design",
     "feat: add user session management and logout functionality",
@@ -44,6 +49,17 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.6.1",
+    buildDate: "2024-01-15",
+    changes: [
+      "fix: resolve login loop issues in Vercel deployment",
+      "fix: improve NextAuth redirect logic for external URLs",
+      "fix: update middleware configuration for better Vercel compatibility",
+      "fix: replace window.location.href with router.push for better navigation",
+      "fix: add proper error handling and session management",
+    ],
+  },
   {
     version: "0.6.0",
     buildDate: "2024-01-15",
