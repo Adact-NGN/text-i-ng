@@ -122,8 +122,8 @@ export default function SMSPage() {
         </div>
 
         {/* Quick Actions Footer */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
+        <div className="mt-8 bg-card rounded-lg shadow-sm border p-6">
+          <h3 className="text-lg font-medium text-card-foreground mb-4">Quick Actions</h3>
           <div className="flex flex-wrap gap-3">
             <Button
               variant="outline"
