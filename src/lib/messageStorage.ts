@@ -1,4 +1,4 @@
-import { sql } from '@vercel/postgres';
+import { sql, initializeDatabase } from "./neon";
 
 export interface StoredMessage {
   id: string;
@@ -11,28 +11,6 @@ export interface StoredMessage {
   name?: string;
   fromName?: string;
 }
-
-// Initialize the messages table if it doesn't exist
-export const initializeDatabase = async (): Promise<void> => {
-  try {
-    await sql`
-      CREATE TABLE IF NOT EXISTS messages (
-        id VARCHAR(255) PRIMARY KEY,
-        phone_number VARCHAR(20) NOT NULL,
-        message TEXT NOT NULL,
-        status VARCHAR(20) NOT NULL CHECK (status IN ('sent', 'delivered', 'failed')),
-        message_id VARCHAR(255),
-        error TEXT,
-        timestamp TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        name VARCHAR(255),
-        from_name VARCHAR(255)
-      )
-    `;
-  } catch (error) {
-    console.error('Error initializing database:', error);
-    throw error;
-  }
-};
 
 // Read messages from database
 export const getMessages = async (): Promise<StoredMessage[]> => {
@@ -52,8 +30,8 @@ export const getMessages = async (): Promise<StoredMessage[]> => {
       FROM messages 
       ORDER BY timestamp DESC
     `;
-    
-    return result.rows.map(row => ({
+
+    return result.map((row) => ({
       id: row.id,
       phoneNumber: row.phoneNumber,
       message: row.message,
@@ -78,7 +56,7 @@ export const addMessage = async (
     await initializeDatabase();
     const id = `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const timestamp = new Date().toISOString();
-    
+
     const newMessage: StoredMessage = {
       ...message,
       id,
@@ -116,15 +94,15 @@ export const updateMessageStatus = async (
 ): Promise<boolean> => {
   try {
     await initializeDatabase();
-    
+
     const result = await sql`
       UPDATE messages 
       SET status = ${status}, error = ${error || null}
       WHERE message_id = ${messageId}
       RETURNING id
     `;
-    
-    return result.rows.length > 0;
+
+    return result.length > 0;
   } catch (error) {
     console.error("Error updating message status:", error);
     return false;
@@ -132,7 +110,9 @@ export const updateMessageStatus = async (
 };
 
 // Get messages by phone number
-export const getMessagesByPhone = async (phoneNumber: string): Promise<StoredMessage[]> => {
+export const getMessagesByPhone = async (
+  phoneNumber: string
+): Promise<StoredMessage[]> => {
   try {
     await initializeDatabase();
     const result = await sql`
@@ -150,8 +130,8 @@ export const getMessagesByPhone = async (phoneNumber: string): Promise<StoredMes
       WHERE phone_number = ${phoneNumber}
       ORDER BY timestamp DESC
     `;
-    
-    return result.rows.map(row => ({
+
+    return result.map((row) => ({
       id: row.id,
       phoneNumber: row.phoneNumber,
       message: row.message,
@@ -169,7 +149,9 @@ export const getMessagesByPhone = async (phoneNumber: string): Promise<StoredMes
 };
 
 // Get recent messages (last N messages)
-export const getRecentMessages = async (limit: number = 50): Promise<StoredMessage[]> => {
+export const getRecentMessages = async (
+  limit: number = 50
+): Promise<StoredMessage[]> => {
   try {
     await initializeDatabase();
     const result = await sql`
@@ -187,8 +169,8 @@ export const getRecentMessages = async (limit: number = 50): Promise<StoredMessa
       ORDER BY timestamp DESC
       LIMIT ${limit}
     `;
-    
-    return result.rows.map(row => ({
+
+    return result.map((row) => ({
       id: row.id,
       phoneNumber: row.phoneNumber,
       message: row.message,

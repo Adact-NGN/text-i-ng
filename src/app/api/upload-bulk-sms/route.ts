@@ -200,7 +200,7 @@ export async function POST(request: NextRequest) {
         console.error(`Error sending SMS to ${item.phoneNumber}:`, error);
 
         // Save failed message to storage
-        const storedMessage = addMessage({
+        const storedMessage = await addMessage({
           phoneNumber: item.phoneNumber,
           message: item.message,
           status: "failed",
