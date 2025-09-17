@@ -46,8 +46,8 @@ export function UserMenu() {
             </span>
           </div>
         )}
-        <span className="hidden sm:block font-medium">
-          {session.user?.name || session.user?.email}
+        <span className="hidden sm:block font-medium text-sm">
+          {session.user?.name?.split(' ')[0] || session.user?.email?.split('@')[0] || "User"}
         </span>
         <svg
           className={`w-4 h-4 transition-transform ${
@@ -77,21 +77,21 @@ export function UserMenu() {
           {/* Dropdown Menu */}
           <div className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20">
             <div className="py-1">
-              <div className="px-4 py-2 border-b border-gray-100">
+              <div className="px-4 py-3 border-b border-gray-100">
                 <p className="text-sm font-medium text-gray-900">
                   {session.user?.name || "User"}
                 </p>
-                <p className="text-sm text-gray-500">{session.user?.email}</p>
+                <p className="text-xs text-gray-500 mt-1">{session.user?.email}</p>
               </div>
 
               <Link
                 href="/profile"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center">
                   <svg
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-3 text-gray-500"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -103,17 +103,17 @@ export function UserMenu() {
                       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                     />
                   </svg>
-                  View Profile
+                  <span className="font-medium">View Profile</span>
                 </div>
               </Link>
 
               <button
                 onClick={handleSignOut}
-                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100"
+                className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center">
                   <svg
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mr-3 text-gray-500"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -125,7 +125,7 @@ export function UserMenu() {
                       d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                     />
                   </svg>
-                  Sign out
+                  <span className="font-medium">Sign out</span>
                 </div>
               </button>
             </div>
