@@ -14,9 +14,18 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.7.0",
+  version: "0.8.0",
   buildDate: "2024-01-15",
   changes: [
+    "feat: implement tabbed SMS interface combining send, bulk upload, and history",
+    "feat: create dedicated /sms page with organized tab navigation",
+    "feat: add comprehensive user profile page with Azure AD information",
+    "feat: add Azure AD phone number support for SMS template personalization",
+    "feat: implement Neon database integration for better performance",
+    "feat: add message deletion functionality (individual and bulk)",
+    "feat: enhance Excel template with user-specific phone numbers",
+    "feat: add navigation component with Home, SMS, and Profile links",
+    "feat: update home page to serve as landing page with clear navigation",
     "feat: implement Vercel Postgres database for persistent message storage",
     "feat: replace file-based storage with proper database solution",
     "feat: add database table initialization and SQL queries",
@@ -67,6 +76,21 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.8.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: implement tabbed SMS interface combining send, bulk upload, and history",
+      "feat: create dedicated /sms page with organized tab navigation",
+      "feat: add comprehensive user profile page with Azure AD information",
+      "feat: add Azure AD phone number support for SMS template personalization",
+      "feat: implement Neon database integration for better performance",
+      "feat: add message deletion functionality (individual and bulk)",
+      "feat: enhance Excel template with user-specific phone numbers",
+      "feat: add navigation component with Home, SMS, and Profile links",
+      "feat: update home page to serve as landing page with clear navigation",
+    ],
+  },
   {
     version: "0.7.0",
     buildDate: "2024-01-15",
