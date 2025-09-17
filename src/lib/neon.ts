@@ -14,8 +14,6 @@ if (!connectionString) {
 export const sql = neon(connectionString, {
   // Enable connection pooling for better performance
   arrayMode: false,
-  // Set connection timeout
-  connectionTimeoutMillis: 10000,
 });
 
 // Alternative connection for non-pooled operations if needed
