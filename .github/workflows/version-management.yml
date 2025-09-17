@@ -74,24 +74,30 @@ jobs:
         if: steps.version-check.outputs.version-update-needed == 'true'
         id: release-notes
         run: |
-          # Get commits since last version
-          LAST_VERSION_COMMIT=$(git log --oneline --grep="chore: update version" -1 --format="%H" || echo "")
+          # Get commits since last version (excluding the version commit itself)
+          LAST_VERSION_COMMIT=$(git log --oneline --grep="chore: update version" -2 --format="%H" | tail -1 || echo "")
 
           if [ -z "$LAST_VERSION_COMMIT" ]; then
-            COMMITS=$(git log --oneline --no-merges --format="%s" | head -20)
+            # No previous version, get all commits except version commits
+            COMMITS=$(git log --oneline --no-merges --format="%s" | grep -v "chore: update version" | head -20)
           else
-            COMMITS=$(git log --oneline $LAST_VERSION_COMMIT..HEAD --no-merges --format="%s")
+            # Get commits since the previous version (not including version commits)
+            COMMITS=$(git log --oneline $LAST_VERSION_COMMIT..HEAD --no-merges --format="%s" | grep -v "chore: update version")
           fi
 
           # Create release notes
           echo "## What's Changed" > release_notes.md
           echo "" >> release_notes.md
 
-          echo "$COMMITS" | while read -r commit; do
-            if [ ! -z "$commit" ]; then
-              echo "- $commit" >> release_notes.md
-            fi
-          done
+          if [ -z "$COMMITS" ]; then
+            echo "- Automated version management" >> release_notes.md
+          else
+            echo "$COMMITS" | while read -r commit; do
+              if [ ! -z "$commit" ]; then
+                echo "- $commit" >> release_notes.md
+              fi
+            done
+          fi
 
           echo "" >> release_notes.md
           echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/v${{ steps.version-manager.outputs.previous-version }}...v${{ steps.version-manager.outputs.new-version }}"
