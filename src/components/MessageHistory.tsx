@@ -134,7 +134,7 @@ export function MessageHistory() {
       case "delivered":
         return <CheckCircle className="h-4 w-4 text-green-500" />;
       case "sent":
-        return <Clock className="h-4 w-4 text-blue-500" />;
+        return <Clock className="h-4 w-4 text-pink-500" />;
       case "failed":
         return <XCircle className="h-4 w-4 text-red-500" />;
     }
@@ -143,7 +143,7 @@ export function MessageHistory() {
   const getStatusBadge = (status: Message["status"]) => {
     const variants = {
       delivered: "bg-green-100 text-green-800",
-      sent: "bg-blue-100 text-blue-800",
+      sent: "bg-pink-100 text-pink-800",
       failed: "bg-red-100 text-red-800",
     };
 
@@ -157,7 +157,7 @@ export function MessageHistory() {
   if (isLoading) {
     return (
       <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-2"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500 mx-auto mb-2"></div>
         <p className="text-gray-500">Loading messages...</p>
       </div>
     );

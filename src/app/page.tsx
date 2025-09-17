@@ -23,9 +23,11 @@ export default function Home() {
       </div>
 
       {/* Main Action Card */}
-      <div className="bg-white rounded-lg shadow-sm border p-8 text-center">
+      <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg shadow-sm border border-pink-200 p-8 text-center">
         <div className="max-w-2xl mx-auto">
-          <MessageSquare className="h-16 w-16 text-pink-600 mx-auto mb-4" />
+          <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+            <MessageSquare className="h-10 w-10 text-white" />
+          </div>
           <h3 className="text-2xl font-semibold text-gray-900 mb-4">
             Ready to Send SMS Messages?
           </h3>
@@ -34,7 +36,7 @@ export default function Home() {
             upload bulk SMS via Excel, and view your message history.
           </p>
           <Link href="/sms">
-            <Button size="lg" className="flex items-center gap-2 mx-auto">
+            <Button size="lg" className="flex items-center gap-2 mx-auto bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700">
               <MessageSquare className="h-5 w-5" />
               Go to SMS Management
               <ArrowRight className="h-4 w-4" />
@@ -56,8 +58,8 @@ export default function Home() {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm border p-6 text-center">
-          <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg className="h-6 w-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg className="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
@@ -68,8 +70,8 @@ export default function Home() {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm border p-6 text-center">
-          <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg className="h-6 w-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg className="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
