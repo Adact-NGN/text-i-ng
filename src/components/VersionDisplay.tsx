@@ -5,7 +5,6 @@ import {
   getVersionDisplay,
   getFullVersionInfo,
   getRecentChanges,
-  VERSION_HISTORY,
 } from "@/lib/version";
 import { Info, X, ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,6 @@ export function VersionDisplay() {
   
   const versionInfo = getFullVersionInfo();
   const recentChanges = getRecentChanges(5);
-  const recentVersions = VERSION_HISTORY.slice(0, 5);
 
   useEffect(() => {
     const fetchGitHubVersion = async () => {
@@ -163,50 +161,29 @@ export function VersionDisplay() {
                   </ul>
                 </div>
 
-                {/* Version History */}
-                <div>
-                  <h4 className="font-medium text-sm mb-2">Version History:</h4>
-                  <div className="space-y-2">
-                    {recentVersions.map((version, index) => (
-                      <div
-                        key={version.version}
-                        className="border-l-2 border-border pl-3"
-                      >
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-xs text-primary">
-                            v{version.version}
-                          </span>
-                          <span className="text-xs text-muted-foreground">
-                            {version.buildDate}
-                          </span>
-                        </div>
-                        <ul className="space-y-1 text-xs text-muted-foreground">
-                          {version.changes
-                            .slice(0, 2)
-                            .map((change, changeIndex) => (
-                              <li
-                                key={changeIndex}
-                                className="flex items-start gap-2"
-                              >
-                                <span className="text-muted-foreground/60 mt-1">•</span>
-                                <span>{change}</span>
-                              </li>
-                            ))}
-                          {version.changes.length > 2 && (
-                            <li className="text-xs text-muted-foreground/60">
-                              +{version.changes.length - 2} more changes
-                            </li>
-                          )}
-                        </ul>
+                {/* GitHub Release Notes */}
+                {githubVersion && githubVersion.body && (
+                  <div>
+                    <h4 className="font-medium text-sm mb-2">Release Notes:</h4>
+                    <div className="border border-border rounded-lg p-3 bg-muted/20">
+                      <div className="text-xs text-muted-foreground whitespace-pre-line">
+                        {githubVersion.body}
                       </div>
-                    ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className="pt-2 border-t border-border">
                   <p className="text-xs text-muted-foreground">
-                    Total changes in current version:{" "}
-                    {versionInfo.changes.length}
+                    {githubVersion ? (
+                      <>
+                        GitHub Release: {githubVersion.current} • Published: {new Date(githubVersion.publishedAt).toLocaleDateString()}
+                      </>
+                    ) : (
+                      <>
+                        Local Version: {versionInfo.version} • Total changes: {versionInfo.changes.length}
+                      </>
+                    )}
                   </p>
                 </div>
               </div>
