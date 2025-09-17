@@ -9,7 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Phone, CheckCircle, XCircle, Trash2, Trash } from "lucide-react";
+import {
+  Clock,
+  Phone,
+  CheckCircle,
+  XCircle,
+  Trash2,
+  Trash,
+} from "lucide-react";
 
 interface Message {
   id: string;
@@ -83,7 +90,7 @@ export function MessageHistory() {
 
       if (data.success) {
         // Remove the message from local state
-        setMessages(messages.filter(msg => msg.id !== messageId));
+        setMessages(messages.filter((msg) => msg.id !== messageId));
       } else {
         alert("Failed to delete message: " + data.error);
       }
@@ -96,7 +103,11 @@ export function MessageHistory() {
   };
 
   const handleDeleteAllMessages = async () => {
-    if (!confirm("Are you sure you want to delete ALL messages? This action cannot be undone.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete ALL messages? This action cannot be undone."
+      )
+    ) {
       return;
     }
 
@@ -173,14 +184,14 @@ export function MessageHistory() {
         <div className="flex justify-end mb-4">
           <button
             onClick={handleDeleteAllMessages}
-            className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 bg-red-50 hover:text-red-800 hover:bg-red-100 active:bg-red-200 rounded-md transition-colors"
           >
             <Trash className="h-4 w-4" />
             Empty All History
           </button>
         </div>
       )}
-      
+
       {messages.map((message) => (
         <Card key={message.id} className="border-l-4 border-l-blue-500">
           <CardContent className="p-4">
