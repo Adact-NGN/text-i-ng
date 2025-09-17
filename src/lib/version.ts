@@ -14,10 +14,11 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.9.0",
+  version: "0.9.1",
   buildDate: "2025-09-17",
   changes: [
-    "feat: implement dedicated version management system",
+    "fix: improve user menu display and reduce redundancy",
+"feat: implement dedicated version management system",
 "feat: implement tabbed SMS interface combining send, bulk upload, and history",
     "feat: create dedicated /sms page with organized tab navigation",
     "feat: add comprehensive user profile page with Azure AD information",
@@ -78,6 +79,13 @@ export const CURRENT_VERSION: VersionInfo = {
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
   {
+    version: "0.9.1",
+    buildDate: "2025-09-17",
+    changes: [
+      "fix: improve user menu display and reduce redundancy"
+    ],
+  },
+{
     version: "0.9.0",
     buildDate: "2025-09-17",
     changes: [
