@@ -14,9 +14,16 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.6.1",
+  version: "0.6.2",
   buildDate: "2024-01-15",
   changes: [
+    "feat: enhance login page with modern gradient background and animations",
+    "feat: add floating background elements with pulse animations",
+    "feat: implement glassmorphism design with backdrop blur effects",
+    "feat: add custom CSS animations for smooth page transitions",
+    "feat: improve button styling with gradient backgrounds and hover effects",
+    "feat: enhance responsive design for mobile and desktop devices",
+    "feat: add professional footer with branding elements",
     "fix: resolve login loop issues in Vercel deployment",
     "fix: improve NextAuth redirect logic for external URLs",
     "fix: update middleware configuration for better Vercel compatibility",
@@ -49,6 +56,19 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.6.2",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: enhance login page with modern gradient background and animations",
+      "feat: add floating background elements with pulse animations",
+      "feat: implement glassmorphism design with backdrop blur effects",
+      "feat: add custom CSS animations for smooth page transitions",
+      "feat: improve button styling with gradient backgrounds and hover effects",
+      "feat: enhance responsive design for mobile and desktop devices",
+      "feat: add professional footer with branding elements",
+    ],
+  },
   {
     version: "0.6.1",
     buildDate: "2024-01-15",
