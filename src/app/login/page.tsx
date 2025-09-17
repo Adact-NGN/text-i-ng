@@ -88,15 +88,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
-        <div className="absolute top-40 left-1/2 w-60 h-60 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 px-0 relative overflow-hidden">
+      {/* Background decorative elements - full viewport coverage */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+        <div className="absolute top-40 left-1/2 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
+        <div className="absolute top-1/2 -right-20 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse delay-700"></div>
+        <div className="absolute bottom-1/4 -left-20 w-72 h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse delay-300"></div>
       </div>
 
-      <div className="relative z-10 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="relative z-10 mx-auto w-full max-w-md px-6">
         <div className="flex justify-center mb-8 transform hover:scale-105 transition-transform duration-300">
           <Logo size="lg" />
         </div>
@@ -110,7 +112,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="mt-12 relative z-10 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-12 relative z-10 mx-auto w-full max-w-md px-6">
         <div className="bg-white/80 backdrop-blur-sm py-10 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-white/20 transform hover:shadow-3xl transition-all duration-300">
           {error && (
             <div className="mb-6 rounded-xl bg-red-50/90 backdrop-blur-sm p-4 border border-red-200 animate-slide-down">

@@ -14,9 +14,12 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.6.2",
+  version: "0.6.3",
   buildDate: "2024-01-15",
   changes: [
+    "fix: make animated background full viewport width and height",
+    "fix: remove grey areas and ensure complete screen coverage",
+    "feat: add more floating background elements for better visual coverage",
     "feat: enhance login page with modern gradient background and animations",
     "feat: add floating background elements with pulse animations",
     "feat: implement glassmorphism design with backdrop blur effects",
@@ -56,6 +59,15 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.6.3",
+    buildDate: "2024-01-15",
+    changes: [
+      "fix: make animated background full viewport width and height",
+      "fix: remove grey areas and ensure complete screen coverage",
+      "feat: add more floating background elements for better visual coverage",
+    ],
+  },
   {
     version: "0.6.2",
     buildDate: "2024-01-15",
