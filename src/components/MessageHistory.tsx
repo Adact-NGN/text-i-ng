@@ -184,7 +184,7 @@ export function MessageHistory() {
         <div className="flex justify-end mb-4">
           <button
             onClick={handleDeleteAllMessages}
-            className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 bg-red-50 hover:text-red-800 hover:bg-red-100 active:bg-red-200 rounded-md transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm text-green-700 bg-green-50 hover:text-green-800 hover:bg-green-100 active:bg-green-200 rounded-md transition-colors dark:text-green-400 dark:bg-green-950 dark:hover:text-green-300 dark:hover:bg-green-900 dark:active:bg-green-800"
           >
             <Trash className="h-4 w-4" />
             Empty All History
@@ -215,11 +215,11 @@ export function MessageHistory() {
                 <button
                   onClick={() => handleDeleteMessage(message.id)}
                   disabled={isDeleting === message.id}
-                  className="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+                  className="ml-2 p-1 text-green-600 hover:text-green-700 hover:bg-green-50 rounded transition-colors disabled:opacity-50 dark:text-green-400 dark:hover:text-green-300 dark:hover:bg-green-950"
                   title="Delete message"
                 >
                   {isDeleting === message.id ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-500"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-600 dark:border-green-400"></div>
                   ) : (
                     <Trash2 className="h-4 w-4" />
                   )}
