@@ -197,6 +197,12 @@ ${changes.map(change => `      "${change}"`).join(',\n')}
       execSync(`git commit -m "${commitMessage}"`, { stdio: 'inherit' });
       
       console.log(`✅ Created version commit for ${newVersion}`);
+      
+      // Output the new version for GitHub Actions
+      if (process.env.GITHUB_OUTPUT) {
+        fs.appendFileSync(process.env.GITHUB_OUTPUT, `new-version=${newVersion}\n`);
+      }
+      
       return true;
     } catch (error) {
       console.error('❌ Error creating version commit:', error.message);

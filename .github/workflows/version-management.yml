@@ -57,6 +57,7 @@ jobs:
 
       - name: Run version manager
         if: steps.version-check.outputs.version-update-needed == 'true'
+        id: version-manager
         run: |
           echo "🚀 Running version management agent..."
           # Configure Git identity for the CI environment
@@ -75,8 +76,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.version-check.outputs.new-version }}
-          release_name: Release v${{ steps.version-check.outputs.new-version }}
+          tag_name: v${{ steps.version-manager.outputs.new-version }}
+          release_name: Release v${{ steps.version-manager.outputs.new-version }}
           body: |
             Automated version update with the following changes:
             - Version bump based on conventional commits
