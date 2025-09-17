@@ -38,7 +38,7 @@ export function UserMenu() {
             className="w-8 h-8 rounded-full"
           />
         ) : (
-          <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+          <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center">
             <span className="text-white text-sm font-medium">
               {session.user?.name?.charAt(0) ||
                 session.user?.email?.charAt(0) ||

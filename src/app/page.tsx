@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 bg-background">
       {/* Header with Version */}
       <div className="flex justify-between items-start">
         <div className="text-center flex-1">
@@ -23,15 +23,15 @@ export default function Home() {
       </div>
 
       {/* Main Action Card */}
-      <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg shadow-sm border border-pink-200 p-8 text-center">
+      <div className="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-lg shadow-sm border border-pink-200 dark:border-pink-800 p-8 text-center">
         <div className="max-w-2xl mx-auto">
           <div className="w-20 h-20 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <MessageSquare className="h-10 w-10 text-white" />
           </div>
-          <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+          <h3 className="text-2xl font-semibold text-foreground mb-4">
             Ready to Send SMS Messages?
           </h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             Access the SMS management interface to send individual messages, 
             upload bulk SMS via Excel, and view your message history.
           </p>
@@ -47,7 +47,7 @@ export default function Home() {
 
       {/* Features Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border p-6 text-center">
+        <div className="bg-card rounded-lg shadow-sm border p-6 text-center">
           <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-4">
             <MessageSquare className="h-6 w-6 text-pink-600" />
           </div>
@@ -57,7 +57,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-6 text-center">
+        <div className="bg-card rounded-lg shadow-sm border p-6 text-center">
           <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
             <svg className="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -69,7 +69,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-sm border p-6 text-center">
+        <div className="bg-card rounded-lg shadow-sm border p-6 text-center">
           <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
             <svg className="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

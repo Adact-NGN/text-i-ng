@@ -87,7 +87,7 @@ export function VersionDisplay() {
                         className="border-l-2 border-gray-200 pl-3"
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-xs text-blue-600">
+                          <span className="font-medium text-xs text-pink-600">
                             v{version.version}
                           </span>
                           <span className="text-xs text-gray-500">
