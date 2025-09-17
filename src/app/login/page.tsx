@@ -18,11 +18,18 @@ export default function LoginPage() {
     const checkSession = async () => {
       const session = await getSession();
       if (session) {
-        // Always redirect to root page after successful authentication
-        router.push("/");
+        // Force a hard redirect to ensure we leave the login page
+        window.location.href = "/";
       }
     };
+    
+    // Check immediately
     checkSession();
+    
+    // Also check periodically in case session is established after page load
+    const interval = setInterval(checkSession, 1000);
+    
+    return () => clearInterval(interval);
   }, [router]);
 
   useEffect(() => {

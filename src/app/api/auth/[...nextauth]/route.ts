@@ -123,7 +123,22 @@ const handler = NextAuth({
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Always redirect to root page after successful authentication
+      // If user is trying to access login page, redirect to home
+      if (url.includes('/login')) {
+        return baseUrl;
+      }
+      
+      // If it's a relative URL, make it absolute
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`;
+      }
+      
+      // If it's the same origin, allow it
+      if (url.startsWith(baseUrl)) {
+        return url;
+      }
+      
+      // Default to home page
       return baseUrl;
     },
   },
