@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import twilio from "twilio";
 import { addMessage } from "@/lib/messageStorage";
+import { initializeDatabase } from "@/lib/neon";
 
 // Initialize Twilio client lazily
 const getTwilioClient = () => {
@@ -15,6 +16,9 @@ const getTwilioClient = () => {
 
 export async function POST(request: NextRequest) {
   try {
+    // Initialize database once
+    await initializeDatabase();
+    
     const { phoneNumbers, message, fromName } = await request.json();
 
     // Validate required fields

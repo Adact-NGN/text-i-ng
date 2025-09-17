@@ -24,8 +24,16 @@ export const sqlDirect = directConnectionString
   ? neon(directConnectionString)
   : sql;
 
+// Track if database has been initialized to prevent repeated initialization
+let isDatabaseInitialized = false;
+
 // Database initialization with proper error handling
 export const initializeDatabase = async (): Promise<void> => {
+  // Skip if already initialized
+  if (isDatabaseInitialized) {
+    return;
+  }
+
   try {
     // Create messages table
     await sql`
@@ -94,6 +102,7 @@ export const initializeDatabase = async (): Promise<void> => {
     await sql`CREATE INDEX IF NOT EXISTS idx_accounts_user_id ON accounts(user_id)`;
 
     console.log("Database initialized successfully");
+    isDatabaseInitialized = true;
   } catch (error) {
     console.error("Error initializing database:", error);
     throw error;

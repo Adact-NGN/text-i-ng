@@ -1,4 +1,4 @@
-import { sql, initializeDatabase } from "./neon";
+import { sql } from "./neon";
 
 export interface StoredMessage {
   id: string;
@@ -15,7 +15,6 @@ export interface StoredMessage {
 // Read messages from database
 export const getMessages = async (): Promise<StoredMessage[]> => {
   try {
-    await initializeDatabase();
     const result = await sql`
       SELECT 
         id,
@@ -53,7 +52,6 @@ export const addMessage = async (
   message: Omit<StoredMessage, "id" | "timestamp">
 ): Promise<StoredMessage> => {
   try {
-    await initializeDatabase();
     const id = `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     const timestamp = new Date().toISOString();
 
@@ -93,7 +91,6 @@ export const updateMessageStatus = async (
   error?: string
 ): Promise<boolean> => {
   try {
-    await initializeDatabase();
 
     const result = await sql`
       UPDATE messages 
@@ -114,7 +111,6 @@ export const getMessagesByPhone = async (
   phoneNumber: string
 ): Promise<StoredMessage[]> => {
   try {
-    await initializeDatabase();
     const result = await sql`
       SELECT 
         id,
@@ -153,7 +149,6 @@ export const getRecentMessages = async (
   limit: number = 50
 ): Promise<StoredMessage[]> => {
   try {
-    await initializeDatabase();
     const result = await sql`
       SELECT 
         id,
@@ -190,7 +185,6 @@ export const getRecentMessages = async (
 // Delete a specific message by ID
 export const deleteMessage = async (messageId: string): Promise<boolean> => {
   try {
-    await initializeDatabase();
     
     const result = await sql`
       DELETE FROM messages WHERE id = ${messageId}
@@ -207,7 +201,6 @@ export const deleteMessage = async (messageId: string): Promise<boolean> => {
 // Delete all messages
 export const deleteAllMessages = async (): Promise<boolean> => {
   try {
-    await initializeDatabase();
     
     await sql`DELETE FROM messages`;
     

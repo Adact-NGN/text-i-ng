@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getRecentMessages, getMessagesByPhone } from "@/lib/messageStorage";
+import { initializeDatabase } from "@/lib/neon";
 
 export async function GET(request: NextRequest) {
   try {
+    // Initialize database once
+    await initializeDatabase();
+    
     const { searchParams } = new URL(request.url);
     const phoneNumber = searchParams.get("phoneNumber");
     const limit = parseInt(searchParams.get("limit") || "50");
