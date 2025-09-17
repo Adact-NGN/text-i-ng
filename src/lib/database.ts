@@ -81,7 +81,7 @@ export async function createUser(
     VALUES (${email}, ${name || null}, ${azureAdId || null})
     RETURNING *
   `;
-  return result.rows[0] as User;
+  return result[0] as User;
 }
 
 export async function getUserByEmail(email: string): Promise<User | null> {
