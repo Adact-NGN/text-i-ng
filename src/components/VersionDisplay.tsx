@@ -104,7 +104,7 @@ export function VersionDisplay() {
                 {isLoading && (
                   <div className="border border-border rounded-lg p-4 bg-muted/30">
                     <div className="flex items-center gap-2 mb-3">
-                      <Github className="h-4 w-4 text-primary" />
+                      <Github className="h-4 w-4 text-primary animate-pulse" />
                       <h4 className="font-medium text-sm">Latest GitHub Release</h4>
                     </div>
                     <div className="text-xs text-muted-foreground">
