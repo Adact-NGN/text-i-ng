@@ -59,13 +59,14 @@ jobs:
         if: steps.version-check.outputs.version-update-needed == 'true'
         run: |
           echo "🚀 Running version management agent..."
+          # Configure Git identity for the CI environment
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           npm run version:update
 
       - name: Push version updates
         if: steps.version-check.outputs.version-update-needed == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
           git push origin main
 
       - name: Create release
