@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo";
 import { SessionProvider } from "@/components/SessionProvider";
 import { UserMenu } from "@/components/UserMenu";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -43,6 +44,7 @@ export default function RootLayout({
             </main>
           </div>
         </SessionProvider>
+        <Analytics />
       </body>
     </html>
   );
