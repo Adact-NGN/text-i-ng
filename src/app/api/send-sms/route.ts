@@ -2,11 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import twilio from "twilio";
 import { addMessage } from "@/lib/messageStorage";
 
-// Initialize Twilio client
-const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// Initialize Twilio client lazily
+const getTwilioClient = () => {
+  if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+    throw new Error("Twilio credentials not configured");
+  }
+  return twilio(
+    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_AUTH_TOKEN
+  );
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -103,6 +108,7 @@ export async function POST(request: NextRequest) {
     const sender = fromName ? fromName.trim() : process.env.TWILIO_PHONE_NUMBER;
 
     // Send SMS to all phone numbers
+    const client = getTwilioClient();
     const results = [];
     const errors = [];
 

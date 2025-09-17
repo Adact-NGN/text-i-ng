@@ -3,11 +3,16 @@ import * as XLSX from "xlsx";
 import twilio from "twilio";
 import { addMessage } from "@/lib/messageStorage";
 
-// Initialize Twilio client
-const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
-);
+// Initialize Twilio client lazily
+const getTwilioClient = () => {
+  if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+    throw new Error("Twilio credentials not configured");
+  }
+  return twilio(
+    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_AUTH_TOKEN
+  );
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -133,6 +138,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Send SMS messages using Twilio
+    const client = getTwilioClient();
     const results = [];
     for (const item of processedData) {
       try {
