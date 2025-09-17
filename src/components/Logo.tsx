@@ -34,7 +34,7 @@ export function Logo({ className, size = "md" }: LogoProps) {
       </div>
 
       {/* App Name */}
-      <span className={cn("font-bold text-gray-900", textSizeClasses[size])}>
+      <span className={cn("font-bold text-foreground", textSizeClasses[size])}>
         TextiNG
       </span>
     </div>
