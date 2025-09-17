@@ -186,3 +186,34 @@ export const getRecentMessages = async (
     return [];
   }
 };
+
+// Delete a specific message by ID
+export const deleteMessage = async (messageId: string): Promise<boolean> => {
+  try {
+    await initializeDatabase();
+    
+    const result = await sql`
+      DELETE FROM messages WHERE id = ${messageId}
+      RETURNING id
+    `;
+    
+    return result.length > 0;
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    return false;
+  }
+};
+
+// Delete all messages
+export const deleteAllMessages = async (): Promise<boolean> => {
+  try {
+    await initializeDatabase();
+    
+    await sql`DELETE FROM messages`;
+    
+    return true;
+  } catch (error) {
+    console.error("Error deleting all messages:", error);
+    return false;
+  }
+};

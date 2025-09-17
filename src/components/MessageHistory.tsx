@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Phone, CheckCircle, XCircle } from "lucide-react";
+import { Clock, Phone, CheckCircle, XCircle, Trash2, Trash } from "lucide-react";
 
 interface Message {
   id: string;
@@ -26,6 +26,7 @@ interface Message {
 export function MessageHistory() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
 
   const fetchMessages = async () => {
     try {
@@ -67,6 +68,55 @@ export function MessageHistory() {
       window.removeEventListener("bulkMessagesSent", handleMessageSent);
     };
   }, []);
+
+  const handleDeleteMessage = async (messageId: string) => {
+    if (!confirm("Are you sure you want to delete this message?")) {
+      return;
+    }
+
+    setIsDeleting(messageId);
+    try {
+      const response = await fetch(`/api/messages/delete?id=${messageId}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        // Remove the message from local state
+        setMessages(messages.filter(msg => msg.id !== messageId));
+      } else {
+        alert("Failed to delete message: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error deleting message:", error);
+      alert("Failed to delete message");
+    } finally {
+      setIsDeleting(null);
+    }
+  };
+
+  const handleDeleteAllMessages = async () => {
+    if (!confirm("Are you sure you want to delete ALL messages? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/messages/delete-all", {
+        method: "DELETE",
+      });
+      const data = await response.json();
+
+      if (data.success) {
+        setMessages([]);
+        alert("All messages deleted successfully");
+      } else {
+        alert("Failed to delete all messages: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error deleting all messages:", error);
+      alert("Failed to delete all messages");
+    }
+  };
 
   const getStatusIcon = (status: Message["status"]) => {
     switch (status) {
@@ -118,6 +168,19 @@ export function MessageHistory() {
 
   return (
     <div className="space-y-3 max-h-96 overflow-y-auto">
+      {/* Delete All Button */}
+      {messages.length > 0 && (
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleDeleteAllMessages}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
+          >
+            <Trash className="h-4 w-4" />
+            Empty All History
+          </button>
+        </div>
+      )}
+      
       {messages.map((message) => (
         <Card key={message.id} className="border-l-4 border-l-blue-500">
           <CardContent className="p-4">
@@ -138,6 +201,18 @@ export function MessageHistory() {
               <div className="flex items-center gap-2">
                 {getStatusIcon(message.status)}
                 {getStatusBadge(message.status)}
+                <button
+                  onClick={() => handleDeleteMessage(message.id)}
+                  disabled={isDeleting === message.id}
+                  className="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors disabled:opacity-50"
+                  title="Delete message"
+                >
+                  {isDeleting === message.id ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-red-500"></div>
+                  ) : (
+                    <Trash2 className="h-4 w-4" />
+                  )}
+                </button>
               </div>
             </div>
 
