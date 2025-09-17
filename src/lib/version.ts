@@ -14,10 +14,17 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.9.1",
+  version: "0.10.0",
   buildDate: "2025-09-17",
   changes: [
-    "fix: improve user menu display and reduce redundancy",
+    "feat: integrate GitHub release information with version display - add API route to fetch GitHub releases, enhance VersionDisplay component with GitHub data, show latest release info in version modal",
+    "fix: resolve localStorage SSR issue in ThemeProvider",
+    "feat: implement dark mode and fix remaining blue elements",
+    "feat: update login page to pink theme with sleeker design",
+    "feat: complete pink theme and add colorful variety",
+    "feat: transform app to pink theme",
+    "fix: improve icon alignment in user menu",
+"fix: improve user menu display and reduce redundancy",
 "feat: implement dedicated version management system",
 "feat: implement tabbed SMS interface combining send, bulk upload, and history",
     "feat: create dedicated /sms page with organized tab navigation",
@@ -79,6 +86,19 @@ export const CURRENT_VERSION: VersionInfo = {
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
   {
+    version: "0.10.0",
+    buildDate: "2025-09-17",
+    changes: [
+      "feat: integrate GitHub release information with version display - add API route to fetch GitHub releases, enhance VersionDisplay component with GitHub data, show latest release info in version modal",
+      "fix: resolve localStorage SSR issue in ThemeProvider",
+      "feat: implement dark mode and fix remaining blue elements",
+      "feat: update login page to pink theme with sleeker design",
+      "feat: complete pink theme and add colorful variety",
+      "feat: transform app to pink theme",
+      "fix: improve icon alignment in user menu"
+    ],
+  },
+{
     version: "0.9.1",
     buildDate: "2025-09-17",
     changes: [
