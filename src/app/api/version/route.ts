@@ -12,18 +12,22 @@ export async function GET() {
       }
     );
 
-    if (!response.ok) {
-      // Handle specific error cases
-      if (response.status === 404) {
-        console.warn("GitHub repository not found or not accessible");
-        throw new Error("Repository not found or not accessible");
-      }
-      if (response.status === 403) {
-        console.warn("GitHub API rate limit exceeded");
-        throw new Error("GitHub API rate limit exceeded");
-      }
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
+        if (!response.ok) {
+          // Handle specific error cases
+          if (response.status === 404) {
+            console.warn("GitHub repository not found or not accessible");
+            throw new Error("Repository not found or not accessible");
+          }
+          if (response.status === 403) {
+            console.warn("GitHub API rate limit exceeded");
+            throw new Error("GitHub API rate limit exceeded");
+          }
+          if (response.status === 401) {
+            console.warn("GitHub API authentication failed");
+            throw new Error("GitHub API authentication failed");
+          }
+          throw new Error(`GitHub API error: ${response.status}`);
+        }
 
     const release = await response.json();
 
