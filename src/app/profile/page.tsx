@@ -50,7 +50,7 @@ export default function ProfilePage() {
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
-              <User className="h-6 w-6 text-blue-600" />
+              <User className="h-6 w-6 text-pink-600" />
               Profile Overview
             </CardTitle>
           </CardHeader>
@@ -85,7 +85,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <User className="h-5 w-5 text-green-600" />
+                <User className="h-5 w-5 text-pink-600" />
                 Basic Information
               </CardTitle>
             </CardHeader>
@@ -119,7 +119,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Shield className="h-5 w-5 text-purple-600" />
+                <Shield className="h-5 w-5 text-pink-600" />
                 Azure AD Details
               </CardTitle>
             </CardHeader>
@@ -153,7 +153,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Building className="h-5 w-5 text-orange-600" />
+                <Building className="h-5 w-5 text-pink-600" />
                 Account Information
               </CardTitle>
             </CardHeader>
@@ -181,7 +181,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Globe className="h-5 w-5 text-blue-600" />
+                <Globe className="h-5 w-5 text-pink-600" />
                 Technical Details
               </CardTitle>
             </CardHeader>

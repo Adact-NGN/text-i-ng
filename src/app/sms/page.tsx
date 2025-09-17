@@ -56,14 +56,14 @@ export default function SMSPage() {
                     className={`
                       group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors
                       ${isActive
-                        ? 'border-blue-500 text-blue-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                        ? 'border-pink-500 text-pink-600'
+                        : 'border-transparent text-gray-500 hover:text-pink-700 hover:border-pink-300'
                       }
                     `}
                   >
                     <Icon className={`
                       w-5 h-5 mr-2 transition-colors
-                      ${isActive ? 'text-blue-600' : 'text-gray-400 group-hover:text-gray-500'}
+                      ${isActive ? 'text-pink-600' : 'text-gray-400 group-hover:text-pink-500'}
                     `} />
                     <div className="text-left">
                       <div className="font-medium">{tab.label}</div>
@@ -81,10 +81,10 @@ export default function SMSPage() {
           {activeTab === "send" && (
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Send className="h-5 w-5 text-blue-600" />
-                  Send New SMS
-                </CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Send className="h-5 w-5 text-pink-600" />
+                Send New SMS
+              </CardTitle>
               </CardHeader>
               <CardContent>
                 <SMSForm />
@@ -95,10 +95,10 @@ export default function SMSPage() {
           {activeTab === "bulk" && (
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Upload className="h-5 w-5 text-green-600" />
-                  Bulk SMS Upload
-                </CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Upload className="h-5 w-5 text-pink-600" />
+                Bulk SMS Upload
+              </CardTitle>
               </CardHeader>
               <CardContent>
                 <BulkSMSUpload />
@@ -109,10 +109,10 @@ export default function SMSPage() {
           {activeTab === "history" && (
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <History className="h-5 w-5 text-purple-600" />
-                  Message History
-                </CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <History className="h-5 w-5 text-pink-600" />
+                Message History
+              </CardTitle>
               </CardHeader>
               <CardContent>
                 <MessageHistory />
