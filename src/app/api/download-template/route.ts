@@ -1,12 +1,18 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
 import * as XLSX from "xlsx";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    // Create sample data for the template
+    // Get the current user session
+    const session = await getServerSession();
+    
+    // Create sample data for the template with user-specific phone number
+    const userPhoneNumber = session?.user?.phone || "+1234567890";
+
     const templateData = [
       {
-        "Phone Number": "+1234567890",
+        "Phone Number": userPhoneNumber,
         Message: "Hello! This is a sample message.",
         "Sender ID": "COMPANY",
       },

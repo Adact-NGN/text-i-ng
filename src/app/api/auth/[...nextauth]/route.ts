@@ -10,6 +10,8 @@ interface AzureADProfile {
   upn?: string;
   preferred_username?: string;
   unique_name?: string;
+  phone_number?: string;
+  mobile_phone?: string;
 }
 
 // Extend the Session and JWT types to include custom properties
@@ -21,6 +23,7 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      phone?: string | null;
     };
   }
   
@@ -71,6 +74,11 @@ const handler = NextAuth({
       clientId: process.env.AZURE_AD_CLIENT_ID!,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
       tenantId: process.env.AZURE_AD_TENANT_ID!,
+      authorization: {
+        params: {
+          scope: "openid profile email User.Read",
+        },
+      },
     }),
   ],
   callbacks: {
@@ -113,6 +121,7 @@ const handler = NextAuth({
         token.name = azureProfile.name;
         token.email = azureProfile.email;
         token.picture = azureProfile.picture;
+        token.phone = azureProfile.phone_number || azureProfile.mobile_phone;
       }
       return token;
     },
@@ -120,6 +129,7 @@ const handler = NextAuth({
       // Send properties to the client, like an access_token and user id from a provider.
       session.accessToken = token.accessToken as string;
       session.user.id = token.sub as string;
+      session.user.phone = token.phone as string;
       return session;
     },
     async redirect({ url, baseUrl }) {
