@@ -26,6 +26,10 @@ export async function GET() {
             console.warn("GitHub API authentication failed");
             throw new Error("GitHub API authentication failed");
           }
+          if (response.status === 422) {
+            console.warn("GitHub API validation failed");
+            throw new Error("GitHub API validation failed");
+          }
           throw new Error(`GitHub API error: ${response.status}`);
         }
 
