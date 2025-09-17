@@ -174,9 +174,20 @@ class VersionManager {
     try {
       const commitMessage = `chore: update version to ${newVersion}\n\n- ${bumpType} version bump\n- Updated changelog with recent changes\n- Automated version management`;
 
-      // No need to add specific files since we're not updating local version files
-      execSync(`git add .`, { stdio: "inherit" });
-      execSync(`git commit -m "${commitMessage}"`, { stdio: "inherit" });
+      // Check if there are any changes to commit
+      try {
+        const status = execSync(`git status --porcelain`, { encoding: "utf8" });
+        if (!status.trim()) {
+          console.log("📝 No changes to commit - creating empty commit for version tracking");
+          execSync(`git commit --allow-empty -m "${commitMessage}"`, { stdio: "inherit" });
+        } else {
+          execSync(`git add .`, { stdio: "inherit" });
+          execSync(`git commit -m "${commitMessage}"`, { stdio: "inherit" });
+        }
+      } catch (commitError) {
+        console.log("📝 No changes to commit - creating empty commit for version tracking");
+        execSync(`git commit --allow-empty -m "${commitMessage}"`, { stdio: "inherit" });
+      }
 
       console.log(`✅ Created version commit for ${newVersion}`);
 
