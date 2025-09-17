@@ -4,6 +4,7 @@ import "./globals.css";
 import { Logo } from "@/components/Logo";
 import { SessionProvider } from "@/components/SessionProvider";
 import { UserMenu } from "@/components/UserMenu";
+import { Navigation } from "@/components/Navigation";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -28,10 +29,11 @@ export default function RootLayout({
             <header className="bg-white shadow-sm border-b">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                  <div className="flex items-center">
+                  <div className="flex items-center space-x-8">
                     <Link href="/" className="cursor-pointer">
                       <Logo />
                     </Link>
+                    <Navigation />
                   </div>
                   <div className="flex items-center">
                     <UserMenu />
