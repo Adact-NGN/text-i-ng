@@ -202,7 +202,7 @@ export function BulkSMSUpload() {
               <strong>Required columns:</strong> Phone Number, Message
             </p>
             <p>
-              <strong>Optional columns:</strong> Name, Sender ID
+              <strong>Optional columns:</strong> Sender ID
             </p>
             <p>
               <strong>Supported formats:</strong> .xlsx, .xls
