@@ -44,8 +44,8 @@ export function Navigation() {
             className={`
               flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors
               ${isActive
-                ? 'bg-pink-100 text-pink-700'
-                : 'text-gray-600 hover:text-pink-900 hover:bg-pink-50'
+                ? 'bg-primary/10 text-primary'
+                : 'text-muted-foreground hover:text-foreground hover:bg-accent'
               }
             `}
           >

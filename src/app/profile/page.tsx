@@ -13,8 +13,8 @@ export default function ProfilePage() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-pink-600"></div>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -26,10 +26,10 @@ export default function ProfilePage() {
 
   if (!session?.user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">No User Data</h1>
-          <p className="text-gray-600">Unable to load user information.</p>
+          <h1 className="text-2xl font-bold text-foreground mb-4">No User Data</h1>
+          <p className="text-muted-foreground">Unable to load user information.</p>
         </div>
       </div>
     );
@@ -38,19 +38,19 @@ export default function ProfilePage() {
   const user = session.user;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">User Profile</h1>
-          <p className="text-gray-600 mt-2">Your Azure AD account information</p>
+          <h1 className="text-3xl font-bold text-foreground">User Profile</h1>
+          <p className="text-muted-foreground mt-2">Your Azure AD account information</p>
         </div>
 
         {/* Profile Overview Card */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-3">
-              <User className="h-6 w-6 text-pink-600" />
+              <User className="h-6 w-6 text-primary" />
               Profile Overview
             </CardTitle>
           </CardHeader>
@@ -60,16 +60,16 @@ export default function ProfilePage() {
                 <img
                   src={user.image}
                   alt="Profile"
-                  className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+                  className="w-20 h-20 rounded-full object-cover border-2 border-border"
                 />
               )}
               <div className="flex-1">
-                <h2 className="text-2xl font-semibold text-gray-900">
+                <h2 className="text-2xl font-semibold text-foreground">
                   {user.name || "No Name"}
                 </h2>
-                <p className="text-gray-600">{user.email}</p>
+                <p className="text-muted-foreground">{user.email}</p>
                 {user.phone && (
-                  <p className="text-gray-600 flex items-center gap-2 mt-1">
+                  <p className="text-muted-foreground flex items-center gap-2 mt-1">
                     <Phone className="h-4 w-4" />
                     {user.phone}
                   </p>
@@ -85,32 +85,32 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <User className="h-5 w-5 text-pink-600" />
+                <User className="h-5 w-5 text-primary" />
                 Basic Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-500">Full Name</label>
-                <p className="text-gray-900">{user.name || "Not provided"}</p>
+                <label className="text-sm font-medium text-muted-foreground">Full Name</label>
+                <p className="text-foreground">{user.name || "Not provided"}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Email Address</label>
-                <p className="text-gray-900 flex items-center gap-2">
+                <label className="text-sm font-medium text-muted-foreground">Email Address</label>
+                <p className="text-foreground flex items-center gap-2">
                   <Mail className="h-4 w-4" />
                   {user.email || "Not provided"}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Phone Number</label>
-                <p className="text-gray-900 flex items-center gap-2">
+                <label className="text-sm font-medium text-muted-foreground">Phone Number</label>
+                <p className="text-foreground flex items-center gap-2">
                   <Phone className="h-4 w-4" />
                   {user.phone || "Not provided"}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">User ID</label>
-                <p className="text-gray-900 font-mono text-sm">{user.id || "Not provided"}</p>
+                <label className="text-sm font-medium text-muted-foreground">User ID</label>
+                <p className="text-foreground font-mono text-sm">{user.id || "Not provided"}</p>
               </div>
             </CardContent>
           </Card>
@@ -119,30 +119,30 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Shield className="h-5 w-5 text-pink-600" />
+                <Shield className="h-5 w-5 text-primary" />
                 Azure AD Details
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-500">Authentication Status</label>
+                <label className="text-sm font-medium text-muted-foreground">Authentication Status</label>
                 <Badge variant="default" className="bg-green-100 text-green-800">
                   Authenticated
                 </Badge>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Provider</label>
-                <p className="text-gray-900">Azure Active Directory</p>
+                <label className="text-sm font-medium text-muted-foreground">Provider</label>
+                <p className="text-foreground">Azure Active Directory</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Session Active</label>
+                <label className="text-sm font-medium text-muted-foreground">Session Active</label>
                 <Badge variant="outline" className="text-green-600 border-green-600">
                   Active
                 </Badge>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Access Token</label>
-                <p className="text-gray-900 font-mono text-xs break-all">
+                <label className="text-sm font-medium text-muted-foreground">Access Token</label>
+                <p className="text-foreground font-mono text-xs break-all">
                   {session.accessToken ? "Available" : "Not available"}
                 </p>
               </div>
@@ -153,25 +153,25 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Building className="h-5 w-5 text-pink-600" />
+                <Building className="h-5 w-5 text-primary" />
                 Account Information
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-500">Email Domain</label>
-                <p className="text-gray-900">
+                <label className="text-sm font-medium text-muted-foreground">Email Domain</label>
+                <p className="text-foreground">
                   {user.email ? user.email.split('@')[1] : "Not available"}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Profile Picture</label>
-                <p className="text-gray-900">
+                <label className="text-sm font-medium text-muted-foreground">Profile Picture</label>
+                <p className="text-foreground">
                   {user.image ? "Available" : "Not provided"}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Account Type</label>
+                <label className="text-sm font-medium text-muted-foreground">Account Type</label>
                 <Badge variant="secondary">Azure AD User</Badge>
               </div>
             </CardContent>
@@ -181,26 +181,26 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
-                <Globe className="h-5 w-5 text-pink-600" />
+                <Globe className="h-5 w-5 text-primary" />
                 Technical Details
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="text-sm font-medium text-gray-500">Session ID</label>
-                <p className="text-gray-900 font-mono text-xs break-all">
+                <label className="text-sm font-medium text-muted-foreground">Session ID</label>
+                <p className="text-foreground font-mono text-xs break-all">
                   {user.id || "Not available"}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Profile Image URL</label>
-                <p className="text-gray-900 font-mono text-xs break-all">
+                <label className="text-sm font-medium text-muted-foreground">Profile Image URL</label>
+                <p className="text-foreground font-mono text-xs break-all">
                   {user.image || "Not provided"}
                 </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-500">Data Source</label>
-                <p className="text-gray-900">Microsoft Graph API</p>
+                <label className="text-sm font-medium text-muted-foreground">Data Source</label>
+                <p className="text-foreground">Microsoft Graph API</p>
               </div>
             </CardContent>
           </Card>

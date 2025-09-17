@@ -67,10 +67,10 @@ export function VersionDisplay() {
                   <h4 className="font-medium text-sm mb-2">
                     Current Version Changes:
                   </h4>
-                  <ul className="space-y-1 text-xs text-gray-600">
+                  <ul className="space-y-1 text-xs text-muted-foreground">
                     {recentChanges.map((change, index) => (
                       <li key={index} className="flex items-start gap-2">
-                        <span className="text-green-500 mt-1">•</span>
+                        <span className="text-green-500 dark:text-green-400 mt-1">•</span>
                         <span>{change}</span>
                       </li>
                     ))}
@@ -84,17 +84,17 @@ export function VersionDisplay() {
                     {recentVersions.map((version, index) => (
                       <div
                         key={version.version}
-                        className="border-l-2 border-gray-200 pl-3"
+                        className="border-l-2 border-border pl-3"
                       >
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium text-xs text-pink-600">
+                          <span className="font-medium text-xs text-primary">
                             v{version.version}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-muted-foreground">
                             {version.buildDate}
                           </span>
                         </div>
-                        <ul className="space-y-1 text-xs text-gray-600">
+                        <ul className="space-y-1 text-xs text-muted-foreground">
                           {version.changes
                             .slice(0, 2)
                             .map((change, changeIndex) => (
@@ -102,12 +102,12 @@ export function VersionDisplay() {
                                 key={changeIndex}
                                 className="flex items-start gap-2"
                               >
-                                <span className="text-gray-400 mt-1">•</span>
+                                <span className="text-muted-foreground/60 mt-1">•</span>
                                 <span>{change}</span>
                               </li>
                             ))}
                           {version.changes.length > 2 && (
-                            <li className="text-xs text-gray-400">
+                            <li className="text-xs text-muted-foreground/60">
                               +{version.changes.length - 2} more changes
                             </li>
                           )}
@@ -117,8 +117,8 @@ export function VersionDisplay() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t">
-                  <p className="text-xs text-gray-500">
+                <div className="pt-2 border-t border-border">
+                  <p className="text-xs text-muted-foreground">
                     Total changes in current version:{" "}
                     {versionInfo.changes.length}
                   </p>

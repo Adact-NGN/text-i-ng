@@ -1,4 +1,3 @@
-import { VersionDisplay } from "@/components/VersionDisplay";
 import { Button } from "@/components/ui/button";
 import { MessageSquare, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -6,20 +5,15 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="space-y-8 bg-background">
-      {/* Header with Version */}
-      <div className="flex justify-between items-start">
-        <div className="text-center flex-1">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Twilio SMS Application
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Send SMS messages to any phone number using Twilio. Send individual
-            messages or upload an Excel file for bulk messaging.
-          </p>
-        </div>
-        <div className="ml-4">
-          <VersionDisplay />
-        </div>
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-foreground mb-4">
+          Twilio SMS Application
+        </h2>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Send SMS messages to any phone number using Twilio. Send individual
+          messages or upload an Excel file for bulk messaging.
+        </p>
       </div>
 
       {/* Main Action Card */}

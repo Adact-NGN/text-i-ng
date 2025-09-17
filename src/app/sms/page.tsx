@@ -33,17 +33,17 @@ export default function SMSPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">SMS Management</h1>
-          <p className="text-gray-600 mt-2">Send messages, manage bulk uploads, and view history</p>
+          <h1 className="text-3xl font-bold text-foreground">SMS Management</h1>
+          <p className="text-muted-foreground mt-2">Send messages, manage bulk uploads, and view history</p>
         </div>
 
         {/* Tab Navigation */}
         <div className="mb-8">
-          <div className="border-b border-gray-200">
+          <div className="border-b border-border">
             <nav className="-mb-px flex space-x-8">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
@@ -56,18 +56,18 @@ export default function SMSPage() {
                     className={`
                       group inline-flex items-center py-4 px-1 border-b-2 font-medium text-sm transition-colors
                       ${isActive
-                        ? 'border-pink-500 text-pink-600'
-                        : 'border-transparent text-gray-500 hover:text-pink-700 hover:border-pink-300'
+                        ? 'border-primary text-primary'
+                        : 'border-transparent text-muted-foreground hover:text-foreground hover:border-primary/50'
                       }
                     `}
                   >
                     <Icon className={`
                       w-5 h-5 mr-2 transition-colors
-                      ${isActive ? 'text-pink-600' : 'text-gray-400 group-hover:text-pink-500'}
+                      ${isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-primary'}
                     `} />
                     <div className="text-left">
                       <div className="font-medium">{tab.label}</div>
-                      <div className="text-xs text-gray-500">{tab.description}</div>
+                      <div className="text-xs text-muted-foreground">{tab.description}</div>
                     </div>
                   </button>
                 );
@@ -82,7 +82,7 @@ export default function SMSPage() {
             <Card>
               <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Send className="h-5 w-5 text-pink-600" />
+                <Send className="h-5 w-5 text-primary" />
                 Send New SMS
               </CardTitle>
               </CardHeader>
@@ -96,7 +96,7 @@ export default function SMSPage() {
             <Card>
               <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Upload className="h-5 w-5 text-pink-600" />
+                <Upload className="h-5 w-5 text-primary" />
                 Bulk SMS Upload
               </CardTitle>
               </CardHeader>
@@ -110,7 +110,7 @@ export default function SMSPage() {
             <Card>
               <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <History className="h-5 w-5 text-pink-600" />
+                <History className="h-5 w-5 text-primary" />
                 Message History
               </CardTitle>
               </CardHeader>
