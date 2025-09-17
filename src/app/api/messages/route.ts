@@ -10,9 +10,9 @@ export async function GET(request: NextRequest) {
     let messages;
 
     if (phoneNumber) {
-      messages = getMessagesByPhone(phoneNumber);
+      messages = await getMessagesByPhone(phoneNumber);
     } else {
-      messages = getRecentMessages(limit);
+      messages = await getRecentMessages(limit);
     }
 
     return NextResponse.json({

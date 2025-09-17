@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Save successful message to storage
-        const storedMessage = addMessage({
+        const storedMessage = await addMessage({
           phoneNumber: item.phoneNumber,
           message: item.message,
           status: "sent",

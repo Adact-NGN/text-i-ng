@@ -14,9 +14,13 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.6.5",
+  version: "0.7.0",
   buildDate: "2024-01-15",
   changes: [
+    "feat: implement Vercel Postgres database for persistent message storage",
+    "feat: replace file-based storage with proper database solution",
+    "feat: add database table initialization and SQL queries",
+    "feat: update all message storage functions to use async database operations",
     "feat: remove NG Nordic TextiNG logo from header and login page",
     "feat: clean up branding elements for simplified design",
     "feat: add sparkle emoji and hover animation to welcome text",
@@ -63,6 +67,16 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.7.0",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: implement Vercel Postgres database for persistent message storage",
+      "feat: replace file-based storage with proper database solution",
+      "feat: add database table initialization and SQL queries",
+      "feat: update all message storage functions to use async database operations",
+    ],
+  },
   {
     version: "0.6.5",
     buildDate: "2024-01-15",
