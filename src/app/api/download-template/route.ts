@@ -8,12 +8,12 @@ export async function GET() {
       {
         "Phone Number": "+1234567890",
         Message: "Hello! This is a sample message.",
-        Name: "John Doe",
+        "Sender ID": "COMPANY",
       },
       {
         "Phone Number": "+1987654321",
         Message: "Another sample message here.",
-        Name: "Jane Smith",
+        "Sender ID": "ALERTS",
       },
     ];
 
@@ -25,7 +25,7 @@ export async function GET() {
     const columnWidths = [
       { wch: 15 }, // Phone Number
       { wch: 30 }, // Message
-      { wch: 20 }, // Name
+      { wch: 15 }, // Sender ID
     ];
     worksheet["!cols"] = columnWidths;
 

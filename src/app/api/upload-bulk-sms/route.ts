@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
         {
           error: `Missing required columns: ${missingColumns.join(", ")}`,
           requiredColumns: ["Phone Number", "Message"],
-          optionalColumns: ["Name", "Sender ID"],
+          optionalColumns: ["Sender ID"],
         },
         { status: 400 }
       );
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
       processedData.push({
         phoneNumber,
         message,
-        name: row["Name"]?.toString().trim() || "",
+        name: row["Sender ID"]?.toString().trim() || "",
         fromName: row["Sender ID"]?.toString().trim() || "",
         rowNumber,
       });
