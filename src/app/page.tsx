@@ -9,10 +9,10 @@ export default function Home() {
       {/* Header with Version */}
       <div className="flex justify-between items-start">
         <div className="text-center flex-1">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
             Twilio SMS Application
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Send SMS messages to any phone number using Twilio. Send individual
             messages or upload an Excel file for bulk messaging.
           </p>
@@ -48,35 +48,35 @@ export default function Home() {
       {/* Features Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-card rounded-lg shadow-sm border p-6 text-center">
-          <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <MessageSquare className="h-6 w-6 text-pink-600" />
+          <div className="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <MessageSquare className="h-6 w-6 text-pink-600 dark:text-pink-400" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Send SMS</h3>
-          <p className="text-gray-600 text-sm">
+          <h3 className="text-lg font-medium text-card-foreground mb-2">Send SMS</h3>
+          <p className="text-muted-foreground text-sm">
             Send individual SMS messages to any phone number
           </p>
         </div>
 
         <div className="bg-card rounded-lg shadow-sm border p-6 text-center">
-          <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg className="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg className="h-6 w-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Bulk Upload</h3>
-          <p className="text-gray-600 text-sm">
+          <h3 className="text-lg font-medium text-card-foreground mb-2">Bulk Upload</h3>
+          <p className="text-muted-foreground text-sm">
             Upload Excel files for bulk SMS messaging
           </p>
         </div>
 
         <div className="bg-card rounded-lg shadow-sm border p-6 text-center">
-          <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-            <svg className="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <svg className="h-6 w-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Message History</h3>
-          <p className="text-gray-600 text-sm">
+          <h3 className="text-lg font-medium text-card-foreground mb-2">Message History</h3>
+          <p className="text-muted-foreground text-sm">
             View and manage your sent message history
           </p>
         </div>

@@ -11,8 +11,8 @@ export function UserMenu() {
   if (status === "loading") {
     return (
       <div className="flex items-center space-x-2">
-        <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
-        <div className="w-20 h-4 bg-gray-200 rounded animate-pulse"></div>
+        <div className="w-8 h-8 bg-muted rounded-full animate-pulse"></div>
+        <div className="w-20 h-4 bg-muted rounded animate-pulse"></div>
       </div>
     );
   }
@@ -29,7 +29,7 @@ export function UserMenu() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 text-sm text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md p-1"
+        className="flex items-center space-x-2 text-sm text-foreground hover:text-foreground/80 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-md p-1 transition-colors"
       >
         {session.user?.image ? (
           <img
@@ -75,23 +75,23 @@ export function UserMenu() {
           />
 
           {/* Dropdown Menu */}
-          <div className="absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-20">
+          <div className="absolute right-0 mt-2 w-72 bg-popover rounded-md shadow-lg ring-1 ring-border z-20">
             <div className="py-1">
-              <div className="px-4 py-3 border-b border-gray-100">
-                <p className="text-sm font-medium text-gray-900">
+              <div className="px-4 py-3 border-b border-border">
+                <p className="text-sm font-medium text-popover-foreground">
                   {session.user?.name || "User"}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">{session.user?.email}</p>
+                <p className="text-xs text-muted-foreground mt-1">{session.user?.email}</p>
               </div>
 
               <Link
                 href="/profile"
                 onClick={() => setIsOpen(false)}
-                className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
+                className="w-full text-left px-4 py-3 text-sm text-popover-foreground hover:bg-accent focus:outline-none focus:bg-accent transition-colors"
               >
                 <div className="flex items-center">
                   <svg
-                    className="w-4 h-4 mr-3 text-gray-500 flex-shrink-0"
+                    className="w-4 h-4 mr-3 text-muted-foreground flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -109,11 +109,11 @@ export function UserMenu() {
 
               <button
                 onClick={handleSignOut}
-                className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition-colors"
+                className="w-full text-left px-4 py-3 text-sm text-popover-foreground hover:bg-accent focus:outline-none focus:bg-accent transition-colors"
               >
                 <div className="flex items-center">
                   <svg
-                    className="w-4 h-4 mr-3 text-gray-500 flex-shrink-0"
+                    className="w-4 h-4 mr-3 text-muted-foreground flex-shrink-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
