@@ -99,23 +99,16 @@ export function VersionDisplay() {
             <CardContent className="pt-0">
               <div className="space-y-4">
                 {/* GitHub Release Information */}
-                {isLoading && (
-                  <div className="border border-border rounded-lg p-4 bg-muted/30">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Github className="h-4 w-4 text-primary animate-pulse" />
-                      <h4 className="font-medium text-sm">Latest GitHub Release</h4>
-                    </div>
+                <div className="border border-border rounded-lg p-4 bg-muted/30">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Github className={`h-4 w-4 text-primary ${isLoading ? 'animate-pulse' : ''}`} />
+                    <h4 className="font-medium text-sm">Latest GitHub Release</h4>
+                  </div>
+                  {isLoading ? (
                     <div className="text-xs text-muted-foreground">
                       Loading GitHub release information...
                     </div>
-                  </div>
-                )}
-                {githubVersion && (
-                  <div className="border border-border rounded-lg p-4 bg-muted/30">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Github className="h-4 w-4 text-primary" />
-                      <h4 className="font-medium text-sm">Latest GitHub Release</h4>
-                    </div>
+                  ) : githubVersion ? (
                     <div className="space-y-2 text-xs">
                       <div className="flex items-center justify-between">
                         <span className="text-muted-foreground">Version:</span>
@@ -143,8 +136,12 @@ export function VersionDisplay() {
                         </a>
                       </div>
                     </div>
-                  </div>
-                )}
+                  ) : (
+                    <div className="text-xs text-muted-foreground">
+                      Unable to load GitHub release information
+                    </div>
+                  )}
+                </div>
 
                 {/* Recent Changes for Current Version */}
                 <div>
