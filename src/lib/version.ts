@@ -14,10 +14,12 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.10.0",
+  version: "0.11.0",
   buildDate: "2025-09-17",
   changes: [
-    "feat: integrate GitHub release information with version display - add API route to fetch GitHub releases, enhance VersionDisplay component with GitHub data, show latest release info in version modal",
+    "feat: add loading animation to GitHub icon in version display",
+    "fix: GitHub Actions version output - add new-version output to version manager script, update workflow to capture version from version-manager step, fix release creation to use correct version",
+"feat: integrate GitHub release information with version display - add API route to fetch GitHub releases, enhance VersionDisplay component with GitHub data, show latest release info in version modal",
     "fix: resolve localStorage SSR issue in ThemeProvider",
     "feat: implement dark mode and fix remaining blue elements",
     "feat: update login page to pink theme with sleeker design",
@@ -86,6 +88,14 @@ export const CURRENT_VERSION: VersionInfo = {
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
   {
+    version: "0.11.0",
+    buildDate: "2025-09-17",
+    changes: [
+      "feat: add loading animation to GitHub icon in version display",
+      "fix: GitHub Actions version output - add new-version output to version manager script, update workflow to capture version from version-manager step, fix release creation to use correct version"
+    ],
+  },
+{
     version: "0.10.0",
     buildDate: "2025-09-17",
     changes: [
