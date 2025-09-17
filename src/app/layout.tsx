@@ -7,7 +7,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { Navigation } from "@/components/Navigation";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { VersionDisplay } from "@/components/VersionDisplay";
+import { VersionDisplay } from "@/components/version/VersionDisplay";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/react";
 
