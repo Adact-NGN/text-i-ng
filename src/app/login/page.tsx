@@ -88,19 +88,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex flex-col justify-center py-12 px-0 relative overflow-hidden">
-      {/* Background decorative elements - full viewport coverage */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-500"></div>
-        <div className="absolute top-1/2 -right-20 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse delay-700"></div>
-        <div className="absolute bottom-1/4 -left-20 w-72 h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-15 animate-pulse delay-300"></div>
-      </div>
+    <div className="min-h-screen w-full bg-gradient-to-br from-pink-50 via-purple-50 to-rose-50 flex flex-col justify-center py-12 px-0 relative">
 
       <div className="relative z-10 mx-auto w-full max-w-md px-6">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in hover:scale-105 transition-transform duration-300">
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent animate-fade-in hover:scale-105 transition-transform duration-300">
             Welcome to TextiNG ✨
           </h2>
           <p className="text-lg text-gray-600 animate-fade-in-delay">
@@ -110,7 +102,7 @@ export default function LoginPage() {
       </div>
 
       <div className="mt-12 relative z-10 mx-auto w-full max-w-md px-6">
-        <div className="bg-white/80 backdrop-blur-sm py-10 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-white/20 transform hover:shadow-3xl transition-all duration-300">
+        <div className="bg-white/90 backdrop-blur-sm py-10 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-pink-200/50 transform hover:shadow-3xl transition-all duration-300">
           {error && (
             <div className="mb-6 rounded-xl bg-red-50/90 backdrop-blur-sm p-4 border border-red-200 animate-slide-down">
               <div className="flex">
@@ -141,7 +133,7 @@ export default function LoginPage() {
             <button
               onClick={handleSignIn}
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95"
+              className="group relative w-full flex justify-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-pink-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -209,7 +201,7 @@ export default function LoginPage() {
       {/* Footer */}
       <div className="mt-16 relative z-10 text-center">
         <p className="text-sm text-gray-500">
-          Powered by <span className="font-semibold text-blue-600">TextiNG</span> • 
+          Powered by <span className="font-semibold text-pink-600">TextiNG</span> • 
           Secure • Reliable • Professional
         </p>
       </div>
