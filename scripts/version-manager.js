@@ -11,24 +11,39 @@ const { execSync } = require("child_process");
 
 class VersionManager {
   constructor() {
-    this.versionFile = path.join(__dirname, "../src/lib/version.ts");
     this.currentVersion = null;
     this.versionHistory = [];
   }
 
   /**
-   * Load current version information
+   * Load current version information from GitHub releases
    */
-  loadVersionInfo() {
+  async loadVersionInfo() {
     try {
-      const versionContent = fs.readFileSync(this.versionFile, "utf8");
+      // Get the latest release from GitHub API
+      const response = await fetch(
+        "https://api.github.com/repos/Adact-NGN/text-i-ng/releases/latest",
+        {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+          },
+        }
+      );
 
-      // Extract current version using regex
-      const versionMatch = versionContent.match(/version: "([^"]+)"/);
-      if (versionMatch) {
-        this.currentVersion = versionMatch[1];
+      if (!response.ok) {
+        if (response.status === 404) {
+          // No releases found, start with version 0.1.0
+          this.currentVersion = "0.1.0";
+          console.log(`📋 No releases found, starting with version: ${this.currentVersion}`);
+          return true;
+        }
+        throw new Error(`GitHub API error: ${response.status}`);
       }
 
+      const release = await response.json();
+      // Extract version from tag (remove 'v' prefix if present)
+      this.currentVersion = release.tag_name.replace(/^v/, "");
+      
       console.log(`📋 Current version: ${this.currentVersion}`);
       return true;
     } catch (error) {
@@ -144,60 +159,12 @@ class VersionManager {
   }
 
   /**
-   * Update version file
+   * No longer needed - we don't update local version files
    */
   updateVersionFile(newVersion, changes) {
-    try {
-      let content = fs.readFileSync(this.versionFile, "utf8");
-
-      // Update current version
-      content = content.replace(/version: "[^"]+"/, `version: "${newVersion}"`);
-
-      // Update build date
-      const buildDate = new Date().toISOString().split("T")[0];
-      content = content.replace(
-        /buildDate: "[^"]+"/,
-        `buildDate: "${buildDate}"`
-      );
-
-      // Add new changes to the beginning of changes array
-      const newChanges = changes.map((change) => `    "${change}"`).join(",\n");
-      const changesRegex = /changes: \[\s*([\s\S]*?)\s*\],/;
-      const match = content.match(changesRegex);
-
-      if (match) {
-        const existingChanges = match[1].trim();
-        const updatedChanges = `changes: [\n${newChanges},\n${existingChanges}\n  ],`;
-        content = content.replace(changesRegex, updatedChanges);
-      }
-
-      // Add new version to history
-      const historyEntry = `  {
-    version: "${newVersion}",
-    buildDate: "${buildDate}",
-    changes: [
-${changes.map((change) => `      "${change}"`).join(",\n")}
-    ],
-  },`;
-
-      // Insert new version at the beginning of VERSION_HISTORY
-      const historyRegex =
-        /export const VERSION_HISTORY: VersionInfo\[\] = \[\s*([\s\S]*?)\s*\];/;
-      const historyMatch = content.match(historyRegex);
-
-      if (historyMatch) {
-        const existingHistory = historyMatch[1].trim();
-        const updatedHistory = `export const VERSION_HISTORY: VersionInfo[] = [\n${historyEntry}\n${existingHistory}\n];`;
-        content = content.replace(historyRegex, updatedHistory);
-      }
-
-      fs.writeFileSync(this.versionFile, content);
-      console.log(`✅ Updated version to ${newVersion}`);
-      return true;
-    } catch (error) {
-      console.error("❌ Error updating version file:", error.message);
-      return false;
-    }
+    // This method is no longer needed since we use GitHub releases only
+    console.log(`📝 Version update: ${this.currentVersion} → ${newVersion}`);
+    return true;
   }
 
   /**
@@ -207,7 +174,8 @@ ${changes.map((change) => `      "${change}"`).join(",\n")}
     try {
       const commitMessage = `chore: update version to ${newVersion}\n\n- ${bumpType} version bump\n- Updated changelog with recent changes\n- Automated version management`;
 
-      execSync(`git add ${this.versionFile}`, { stdio: "inherit" });
+      // No need to add specific files since we're not updating local version files
+      execSync(`git add .`, { stdio: "inherit" });
       execSync(`git commit -m "${commitMessage}"`, { stdio: "inherit" });
 
       console.log(`✅ Created version commit for ${newVersion}`);
@@ -238,7 +206,7 @@ ${changes.map((change) => `      "${change}"`).join(",\n")}
     console.log("🚀 Starting Version Management Agent...\n");
 
     // Load current version
-    if (!this.loadVersionInfo()) {
+    if (!(await this.loadVersionInfo())) {
       process.exit(1);
     }
 
