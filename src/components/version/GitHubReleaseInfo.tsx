@@ -18,14 +18,20 @@ interface GitHubReleaseInfoProps {
   error: string | null;
 }
 
-export function GitHubReleaseInfo({ version, isLoading, error }: GitHubReleaseInfoProps) {
+export function GitHubReleaseInfo({
+  version,
+  isLoading,
+  error,
+}: GitHubReleaseInfoProps) {
   return (
     <div className="border border-border rounded-lg p-4 bg-muted/30">
       <div className="flex items-center gap-2 mb-3">
-        <Github className={`h-4 w-4 text-primary ${isLoading ? 'animate-pulse' : ''}`} />
+        <Github
+          className={`h-4 w-4 text-primary ${isLoading ? "animate-pulse" : ""}`}
+        />
         <h4 className="font-medium text-sm">Latest GitHub Release</h4>
       </div>
-      
+
       {isLoading ? (
         <div className="text-xs text-muted-foreground">
           Loading GitHub release information...

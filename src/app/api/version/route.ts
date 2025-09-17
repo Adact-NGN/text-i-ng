@@ -13,11 +13,16 @@ export async function GET() {
     );
 
     if (!response.ok) {
+      // Handle specific error cases
+      if (response.status === 404) {
+        console.warn("GitHub repository not found or not accessible");
+        throw new Error("Repository not found or not accessible");
+      }
       throw new Error(`GitHub API error: ${response.status}`);
     }
 
     const release = await response.json();
-    
+
     return NextResponse.json({
       success: true,
       version: {
@@ -32,15 +37,13 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error fetching GitHub release:", error);
-    
-    // Fallback to local version if GitHub is unavailable
+
     return NextResponse.json({
       success: false,
-      error: "Failed to fetch GitHub release information",
-      fallback: {
-        version: "0.9.1",
-        source: "local",
-      },
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch GitHub release information",
     });
   }
 }

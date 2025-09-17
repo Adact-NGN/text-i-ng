@@ -9,9 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useVersion } from "../hooks/useVersion";
-import { GitHubReleaseInfo } from "./GitHubReleaseInfo";
-import { LocalVersionInfo } from "./LocalVersionInfo";
+import { ReleaseHistory } from "./ReleaseHistory";
 
 interface VersionModalProps {
   isOpen: boolean;
@@ -19,24 +17,17 @@ interface VersionModalProps {
 }
 
 export function VersionModal({ isOpen, onClose }: VersionModalProps) {
-  const { version, isLoading, error } = useVersion();
-
   if (!isOpen) return null;
 
   return (
-    <div className="absolute top-10 right-0 z-50 w-96">
+    <div className="absolute top-10 right-0 z-50 w-[32rem] max-w-[90vw] max-h-[80vh]">
       <Card className="shadow-lg border">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-lg">
-                {version?.current || "v0.12.0"}
-              </CardTitle>
+              <CardTitle className="text-lg">Release History</CardTitle>
               <CardDescription>
-                {version?.publishedAt 
-                  ? `Published ${new Date(version.publishedAt).toLocaleDateString()}`
-                  : "Local version"
-                }
+                GitHub releases and version information
               </CardDescription>
             </div>
             <Button
@@ -49,17 +40,9 @@ export function VersionModal({ isOpen, onClose }: VersionModalProps) {
             </Button>
           </div>
         </CardHeader>
-        
+
         <CardContent className="pt-0">
-          <div className="space-y-4">
-            <GitHubReleaseInfo 
-              version={version}
-              isLoading={isLoading}
-              error={error}
-            />
-            
-            <LocalVersionInfo />
-          </div>
+          <ReleaseHistory />
         </CardContent>
       </Card>
     </div>

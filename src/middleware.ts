@@ -11,6 +11,7 @@ export default withAuth(
         if (
           req.nextUrl.pathname.startsWith("/login") ||
           req.nextUrl.pathname.startsWith("/api/auth") ||
+          req.nextUrl.pathname.startsWith("/api/version") ||
           req.nextUrl.pathname.startsWith("/_next") ||
           req.nextUrl.pathname.startsWith("/favicon.ico")
         ) {
@@ -29,11 +30,12 @@ export const config = {
     /*
      * Match all request paths except for the ones starting with:
      * - api/auth (authentication routes)
+     * - api/version (version API route)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public (public assets)
      */
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|public).*)",
+    "/((?!api/auth|api/version|_next/static|_next/image|favicon.ico|public).*)",
   ],
 };

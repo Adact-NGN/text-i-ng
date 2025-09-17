@@ -27,19 +27,19 @@ export function useVersion(): UseVersionReturn {
     const fetchVersion = async () => {
       setIsLoading(true);
       setError(null);
-      
+
       try {
-        const response = await fetch('/api/version');
+        const response = await fetch("/api/version");
         const data = await response.json();
-        
+
         if (data.success) {
           setVersion(data.version);
         } else {
-          setError(data.error || 'Failed to fetch version');
+          setError(data.error || "Failed to fetch version");
         }
       } catch (err) {
-        setError('Network error');
-        console.error('Failed to fetch GitHub version:', err);
+        setError("Network error");
+        console.error("Failed to fetch GitHub version:", err);
       } finally {
         setIsLoading(false);
       }
