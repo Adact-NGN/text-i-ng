@@ -103,8 +103,8 @@ export default function LoginPage() {
           <Logo size="lg" />
         </div>
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in">
-            Welcome to TextiNG
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent animate-fade-in hover:scale-105 transition-transform duration-300">
+            Welcome to TextiNG ✨
           </h2>
           <p className="text-lg text-gray-600 animate-fade-in-delay">
             Sign in with your Microsoft work or school account

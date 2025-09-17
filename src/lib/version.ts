@@ -14,9 +14,11 @@ export interface VersionInfo {
 // MINOR: New features, backward compatible
 // PATCH: Bug fixes, config changes, minor updates
 export const CURRENT_VERSION: VersionInfo = {
-  version: "0.6.3",
+  version: "0.6.4",
   buildDate: "2024-01-15",
   changes: [
+    "feat: add sparkle emoji and hover animation to welcome text",
+    "feat: enhance login page interactivity with hover effects",
     "fix: make animated background full viewport width and height",
     "fix: remove grey areas and ensure complete screen coverage",
     "feat: add more floating background elements for better visual coverage",
@@ -59,6 +61,14 @@ export const CURRENT_VERSION: VersionInfo = {
 
 // Version history for reference
 export const VERSION_HISTORY: VersionInfo[] = [
+  {
+    version: "0.6.4",
+    buildDate: "2024-01-15",
+    changes: [
+      "feat: add sparkle emoji and hover animation to welcome text",
+      "feat: enhance login page interactivity with hover effects",
+    ],
+  },
   {
     version: "0.6.3",
     buildDate: "2024-01-15",
