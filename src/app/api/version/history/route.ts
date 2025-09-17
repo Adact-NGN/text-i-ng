@@ -17,6 +17,18 @@ export async function GET() {
         console.warn("GitHub repository not found or not accessible");
         throw new Error("Repository not found or not accessible");
       }
+      if (response.status === 403) {
+        console.warn("GitHub API rate limit exceeded");
+        throw new Error("GitHub API rate limit exceeded");
+      }
+      if (response.status === 401) {
+        console.warn("GitHub API authentication failed");
+        throw new Error("GitHub API authentication failed");
+      }
+      if (response.status === 422) {
+        console.warn("GitHub API validation failed");
+        throw new Error("GitHub API validation failed");
+      }
       throw new Error(`GitHub API error: ${response.status}`);
     }
 
