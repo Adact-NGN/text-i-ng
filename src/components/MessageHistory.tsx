@@ -132,19 +132,19 @@ export function MessageHistory() {
   const getStatusIcon = (status: Message["status"]) => {
     switch (status) {
       case "delivered":
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
       case "sent":
-        return <Clock className="h-4 w-4 text-pink-500" />;
+        return <Clock className="h-4 w-4 text-primary" />;
       case "failed":
-        return <XCircle className="h-4 w-4 text-red-500" />;
+        return <XCircle className="h-4 w-4 text-destructive" />;
     }
   };
 
   const getStatusBadge = (status: Message["status"]) => {
     const variants = {
-      delivered: "bg-green-100 text-green-800",
-      sent: "bg-pink-100 text-pink-800",
-      failed: "bg-red-100 text-red-800",
+      delivered: "bg-green-50 text-green-700 border-green-200",
+      sent: "bg-primary/10 text-primary border-primary/20",
+      failed: "bg-destructive/10 text-destructive border-destructive/20",
     };
 
     return (
@@ -157,8 +157,8 @@ export function MessageHistory() {
   if (isLoading) {
     return (
       <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500 mx-auto mb-2"></div>
-        <p className="text-gray-500">Loading messages...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-2"></div>
+        <p className="text-muted-foreground">Loading messages...</p>
       </div>
     );
   }
@@ -166,11 +166,11 @@ export function MessageHistory() {
   if (messages.length === 0) {
     return (
       <div className="text-center py-8">
-        <div className="text-gray-400 mb-2">
+        <div className="text-muted-foreground mb-2">
           <Phone className="h-12 w-12 mx-auto" />
         </div>
-        <p className="text-gray-500">No messages sent yet</p>
-        <p className="text-sm text-gray-400">
+        <p className="text-muted-foreground">No messages sent yet</p>
+        <p className="text-sm text-muted-foreground">
           Send your first SMS to see it here
         </p>
       </div>
@@ -193,17 +193,17 @@ export function MessageHistory() {
       )}
 
       {messages.map((message) => (
-        <Card key={message.id} className="border-l-4 border-l-blue-500">
+        <Card key={message.id} className="border-l-4 border-l-primary">
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-gray-500" />
+                <Phone className="h-4 w-4 text-muted-foreground" />
                 <div className="flex flex-col">
                   <span className="font-medium text-sm">
                     {message.phoneNumber}
                   </span>
                   {message.fromName && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-muted-foreground">
                       Sender ID: {message.fromName}
                     </span>
                   )}
@@ -227,11 +227,11 @@ export function MessageHistory() {
               </div>
             </div>
 
-            <p className="text-sm text-gray-700 mb-2 line-clamp-2">
+            <p className="text-sm text-foreground mb-2 line-clamp-2">
               {message.message}
             </p>
 
-            <div className="flex items-center gap-1 text-xs text-gray-500">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <Clock className="h-3 w-3" />
               {message.timestamp.toLocaleString()}
             </div>

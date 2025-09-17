@@ -138,78 +138,66 @@ export function BulkSMSUpload() {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileSpreadsheet className="h-5 w-5" />
-            Bulk SMS Upload
-          </CardTitle>
-          <CardDescription>
-            Upload an Excel file to send SMS messages to multiple recipients at
-            once.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              onClick={handleDownloadTemplate}
-              disabled={isDownloading}
-              variant="outline"
-              className="flex items-center gap-2"
-            >
-              {isDownloading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900" />
-                  Downloading...
-                </>
-              ) : (
-                <>
-                  <Download className="h-4 w-4" />
-                  Download Template
-                </>
-              )}
-            </Button>
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button
+            onClick={handleDownloadTemplate}
+            disabled={isDownloading}
+            variant="outline"
+            className="flex items-center gap-2"
+          >
+            {isDownloading ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900" />
+                Downloading...
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4" />
+                Download Template
+              </>
+            )}
+          </Button>
 
-            <Button
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isUploading}
-              className="flex items-center gap-2"
-            >
-              {isUploading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <Upload className="h-4 w-4" />
-                  Upload Excel File
-                </>
-              )}
-            </Button>
-          </div>
+          <Button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
+            className="flex items-center gap-2"
+          >
+            {isUploading ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                Processing...
+              </>
+            ) : (
+              <>
+                <Upload className="h-4 w-4" />
+                Upload Excel File
+              </>
+            )}
+          </Button>
+        </div>
 
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx,.xls"
-            onChange={handleFileUpload}
-            className="hidden"
-          />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".xlsx,.xls"
+          onChange={handleFileUpload}
+          className="hidden"
+        />
 
-          <div className="text-sm text-gray-600">
-            <p>
-              <strong>Required columns:</strong> Phone Number, Message
-            </p>
-            <p>
-              <strong>Optional columns:</strong> Sender ID
-            </p>
-            <p>
-              <strong>Supported formats:</strong> .xlsx, .xls
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="text-sm text-muted-foreground">
+          <p>
+            <strong>Required columns:</strong> Phone Number, Message
+          </p>
+          <p>
+            <strong>Optional columns:</strong> Sender ID
+          </p>
+          <p>
+            <strong>Supported formats:</strong> .xlsx, .xls
+          </p>
+        </div>
+      </div>
 
       {error && (
         <Card className="border-red-200 bg-red-50">
