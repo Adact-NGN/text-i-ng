@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "version:update": "node scripts/version-manager.js",
+    "version:check": "node -e \"const { CURRENT_VERSION } = require('./src/lib/version.ts'); console.log('Current version:', CURRENT_VERSION.version);\"",
+    "version:current": "node scripts/version-cli.js current",
+    "version:commits": "node scripts/version-cli.js commits",
+    "version:history": "node scripts/version-cli.js history",
+    "version:analyze": "node scripts/version-cli.js analyze"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.10.0",

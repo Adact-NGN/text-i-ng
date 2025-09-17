@@ -1,0 +1,95 @@
+name: Version Management
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - 'components/**'
+      - 'app/**'
+      - 'lib/**'
+  pull_request:
+    types: [ closed ]
+    branches: [ main ]
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true || github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Fetch full history for commit analysis
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Check for version updates needed
+      id: version-check
+      run: |
+        # Check if there are commits since last version update
+        LAST_VERSION_COMMIT=$(git log --oneline --grep="chore: update version" -1 --format="%H" || echo "")
+        
+        if [ -z "$LAST_VERSION_COMMIT" ]; then
+          echo "No previous version commit found"
+          COMMITS_SINCE_LAST_VERSION=$(git log --oneline --no-merges | wc -l)
+        else
+          COMMITS_SINCE_LAST_VERSION=$(git log --oneline $LAST_VERSION_COMMIT..HEAD --no-merges | wc -l)
+        fi
+        
+        echo "commits-since-last-version=$COMMITS_SINCE_LAST_VERSION" >> $GITHUB_OUTPUT
+        
+        if [ $COMMITS_SINCE_LAST_VERSION -gt 0 ]; then
+          echo "version-update-needed=true" >> $GITHUB_OUTPUT
+        else
+          echo "version-update-needed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Run version manager
+      if: steps.version-check.outputs.version-update-needed == 'true'
+      run: |
+        echo "🚀 Running version management agent..."
+        npm run version:update
+
+    - name: Push version updates
+      if: steps.version-check.outputs.version-update-needed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git push origin main
+
+    - name: Create release
+      if: steps.version-check.outputs.version-update-needed == 'true'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version-check.outputs.new-version }}
+        release_name: Release v${{ steps.version-check.outputs.new-version }}
+        body: |
+          Automated version update with the following changes:
+          - Version bump based on conventional commits
+          - Updated changelog with recent changes
+          - Automated version management
+        draft: false
+        prerelease: false
+
+  notify-version-update:
+    runs-on: ubuntu-latest
+    if: steps.version-check.outputs.version-update-needed == 'true'
+    needs: version-check
+    
+    steps:
+    - name: Notify version update
+      run: |
+        echo "✅ Version management completed successfully"
+        echo "📋 New version has been created and pushed"
+        echo "🚀 Release has been created on GitHub"
