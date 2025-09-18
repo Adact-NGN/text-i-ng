@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 import { MessageHistory } from "@/components/MessageHistory";
 import { SMSForm } from "@/components/SMSForm";
 import { BulkSMSUpload } from "@/components/BulkSMSUpload";
-import { MessageSquare, Send, Upload, History } from "lucide-react";
+import { ADGroupSMS } from "@/components/ADGroupSMS";
+import { MessageSquare, Send, Upload, History, Users } from "lucide-react";
 
 export default function SMSPage() {
-  const [activeTab, setActiveTab] = useState<"send" | "bulk" | "history">("send");
+  const [activeTab, setActiveTab] = useState<"send" | "bulk" | "ad-groups" | "history">("send");
 
   const tabs = [
     {
@@ -23,6 +24,12 @@ export default function SMSPage() {
       label: "Bulk Upload",
       icon: Upload,
       description: "Upload multiple SMS via Excel"
+    },
+    {
+      id: "ad-groups" as const,
+      label: "AD Groups",
+      icon: Users,
+      description: "Send SMS to Azure AD groups"
     },
     {
       id: "history" as const,
@@ -106,6 +113,20 @@ export default function SMSPage() {
             </Card>
           )}
 
+          {activeTab === "ad-groups" && (
+            <Card>
+              <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="h-5 w-5 text-primary" />
+                Azure AD Groups SMS
+              </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ADGroupSMS />
+              </CardContent>
+            </Card>
+          )}
+
           {activeTab === "history" && (
             <Card>
               <CardHeader>
@@ -140,6 +161,14 @@ export default function SMSPage() {
             >
               <Upload className="h-4 w-4" />
               Bulk Upload
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setActiveTab("ad-groups")}
+              className="flex items-center gap-2"
+            >
+              <Users className="h-4 w-4" />
+              AD Groups
             </Button>
             <Button
               variant="outline"

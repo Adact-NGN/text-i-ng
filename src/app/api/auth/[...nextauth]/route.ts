@@ -76,7 +76,7 @@ const handler = NextAuth({
       tenantId: process.env.AZURE_AD_TENANT_ID!,
       authorization: {
         params: {
-          scope: "openid profile email User.Read",
+          scope: "openid profile email User.Read Group.Read.All GroupMember.Read.All",
         },
       },
     }),

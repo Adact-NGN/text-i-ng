@@ -1,0 +1,179 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+export interface AzureADUser {
+  id: string;
+  displayName: string;
+  mail: string;
+  mobilePhone?: string;
+  businessPhones?: string[];
+  userPrincipalName: string;
+}
+
+export interface AzureADGroup {
+  id: string;
+  displayName: string;
+  description?: string;
+  mail?: string;
+  securityEnabled: boolean;
+}
+
+export interface GroupMember {
+  user: AzureADUser;
+  phoneNumber?: string;
+  hasPhoneNumber: boolean;
+}
+
+class AzureADService {
+  private async getAccessToken(): Promise<string> {
+    const session = await getServerSession(authOptions);
+    
+    if (!session?.accessToken) {
+      throw new Error("No valid session or access token found");
+    }
+    
+    return session.accessToken as string;
+  }
+
+  private async makeGraphRequest(endpoint: string): Promise<any> {
+    const accessToken = await this.getAccessToken();
+    
+    const response = await fetch(`https://graph.microsoft.com/v1.0${endpoint}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Graph API error: ${response.status} ${response.statusText}`);
+    }
+
+    return response.json();
+  }
+
+  /**
+   * Get all security groups the current user can access
+   */
+  async getSecurityGroups(): Promise<AzureADGroup[]> {
+    try {
+      const data = await this.makeGraphRequest('/groups?$filter=securityEnabled eq true&$select=id,displayName,description,mail,securityEnabled');
+      return data.value || [];
+    } catch (error) {
+      console.error("Error fetching security groups:", error);
+      throw new Error("Failed to fetch security groups");
+    }
+  }
+
+  /**
+   * Get all distribution groups the current user can access
+   */
+  async getDistributionGroups(): Promise<AzureADGroup[]> {
+    try {
+      const data = await this.makeGraphRequest('/groups?$filter=securityEnabled eq false&$select=id,displayName,description,mail,securityEnabled');
+      return data.value || [];
+    } catch (error) {
+      console.error("Error fetching distribution groups:", error);
+      throw new Error("Failed to fetch distribution groups");
+    }
+  }
+
+  /**
+   * Get all groups (both security and distribution)
+   */
+  async getAllGroups(): Promise<AzureADGroup[]> {
+    try {
+      const data = await this.makeGraphRequest('/groups?$select=id,displayName,description,mail,securityEnabled');
+      return data.value || [];
+    } catch (error) {
+      console.error("Error fetching all groups:", error);
+      throw new Error("Failed to fetch groups");
+    }
+  }
+
+  /**
+   * Get members of a specific group
+   */
+  async getGroupMembers(groupId: string): Promise<GroupMember[]> {
+    try {
+      const data = await this.makeGraphRequest(`/groups/${groupId}/members?$select=id,displayName,mail,mobilePhone,businessPhones,userPrincipalName&$filter=userType eq 'Member'`);
+      
+      const members: GroupMember[] = [];
+      
+      for (const member of data.value || []) {
+        // Extract phone number from mobilePhone or businessPhones
+        let phoneNumber: string | undefined;
+        let hasPhoneNumber = false;
+
+        if (member.mobilePhone) {
+          phoneNumber = member.mobilePhone;
+          hasPhoneNumber = true;
+        } else if (member.businessPhones && member.businessPhones.length > 0) {
+          phoneNumber = member.businessPhones[0];
+          hasPhoneNumber = true;
+        }
+
+        members.push({
+          user: {
+            id: member.id,
+            displayName: member.displayName,
+            mail: member.mail,
+            mobilePhone: member.mobilePhone,
+            businessPhones: member.businessPhones,
+            userPrincipalName: member.userPrincipalName,
+          },
+          phoneNumber,
+          hasPhoneNumber,
+        });
+      }
+
+      return members;
+    } catch (error) {
+      console.error("Error fetching group members:", error);
+      throw new Error("Failed to fetch group members");
+    }
+  }
+
+  /**
+   * Get members of multiple groups
+   */
+  async getMultipleGroupMembers(groupIds: string[]): Promise<GroupMember[]> {
+    const allMembers: GroupMember[] = [];
+    const seenUserIds = new Set<string>();
+
+    for (const groupId of groupIds) {
+      try {
+        const members = await this.getGroupMembers(groupId);
+        
+        // Deduplicate users (in case they're in multiple groups)
+        for (const member of members) {
+          if (!seenUserIds.has(member.user.id)) {
+            seenUserIds.add(member.user.id);
+            allMembers.push(member);
+          }
+        }
+      } catch (error) {
+        console.error(`Error fetching members for group ${groupId}:`, error);
+        // Continue with other groups even if one fails
+      }
+    }
+
+    return allMembers;
+  }
+
+  /**
+   * Search for groups by name
+   */
+  async searchGroups(searchTerm: string): Promise<AzureADGroup[]> {
+    try {
+      const encodedSearch = encodeURIComponent(searchTerm);
+      const data = await this.makeGraphRequest(`/groups?$filter=startswith(displayName,'${encodedSearch}')&$select=id,displayName,description,mail,securityEnabled`);
+      return data.value || [];
+    } catch (error) {
+      console.error("Error searching groups:", error);
+      throw new Error("Failed to search groups");
+    }
+  }
+}
+
+export const azureAdService = new AzureADService();
