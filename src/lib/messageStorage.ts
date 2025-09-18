@@ -210,3 +210,22 @@ export const deleteAllMessages = async (): Promise<boolean> => {
     return false;
   }
 };
+
+// Delete messages older than specified days
+export const deleteOldMessages = async (daysOld: number = 90): Promise<{ deleted: number; error?: string }> => {
+  try {
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - daysOld);
+    
+    const result = await sql`
+      DELETE FROM messages 
+      WHERE timestamp < ${cutoffDate.toISOString()}
+      RETURNING id
+    `;
+    
+    return { deleted: result.length };
+  } catch (error) {
+    console.error("Error deleting old messages:", error);
+    return { deleted: 0, error: error instanceof Error ? error.message : "Unknown error" };
+  }
+};
