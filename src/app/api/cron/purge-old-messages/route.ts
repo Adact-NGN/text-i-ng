@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
 
     console.log("🧹 Starting scheduled cleanup of old messages...");
     
-    // Delete messages older than 90 days
-    const result = await deleteOldMessages(90);
+    // Delete messages older than 48 hours (2 days)
+    const result = await deleteOldMessages(2);
     
     if (result.error) {
       console.error("❌ Error during cleanup:", result.error);
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     
     return NextResponse.json({
       success: true,
-      message: `Successfully deleted ${result.deleted} messages older than 90 days`,
+      message: `Successfully deleted ${result.deleted} messages older than 48 hours`,
       deleted: result.deleted,
       timestamp: new Date().toISOString()
     });
