@@ -88,27 +88,27 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-pink-50 via-purple-50 to-rose-50 flex flex-col justify-center py-12 px-0 relative">
+    <div className="min-h-screen w-full bg-background flex flex-col justify-center py-12 px-0 relative">
 
       <div className="relative z-10 mx-auto w-full max-w-md px-6">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent animate-fade-in hover:scale-105 transition-transform duration-300">
+          <h2 className="text-4xl font-bold text-foreground animate-fade-in hover:scale-105 transition-transform duration-300">
             Welcome to TextiNG ✨
           </h2>
-          <p className="text-lg text-gray-600 animate-fade-in-delay">
+          <p className="text-lg text-muted-foreground animate-fade-in-delay">
             Sign in with your Microsoft work or school account
           </p>
         </div>
       </div>
 
       <div className="mt-12 relative z-10 mx-auto w-full max-w-md px-6">
-        <div className="bg-white/90 backdrop-blur-sm py-10 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-pink-200/50 transform hover:shadow-3xl transition-all duration-300">
+        <div className="bg-card/90 backdrop-blur-sm py-10 px-6 shadow-2xl sm:rounded-2xl sm:px-10 border border-border transform hover:shadow-3xl transition-all duration-300">
           {error && (
-            <div className="mb-6 rounded-xl bg-red-50/90 backdrop-blur-sm p-4 border border-red-200 animate-slide-down">
+            <div className="mb-6 rounded-xl bg-destructive/10 backdrop-blur-sm p-4 border border-destructive/20 animate-slide-down">
               <div className="flex">
                 <div className="flex-shrink-0">
                   <svg
-                    className="h-5 w-5 text-red-500"
+                    className="h-5 w-5 text-destructive"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -120,10 +120,10 @@ export default function LoginPage() {
                   </svg>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-sm font-semibold text-red-800">
+                  <h3 className="text-sm font-semibold text-destructive">
                     Authentication Error
                   </h3>
-                  <div className="mt-2 text-sm text-red-700">{error}</div>
+                  <div className="mt-2 text-sm text-destructive/80">{error}</div>
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ export default function LoginPage() {
             <button
               onClick={handleSignIn}
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-pink-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95"
+              className="group relative w-full flex justify-center py-4 px-6 border border-transparent text-base font-semibold rounded-xl text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-4 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -177,10 +177,10 @@ export default function LoginPage() {
           <div className="mt-8">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300/50" />
+                <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white/80 backdrop-blur-sm text-gray-500 font-medium">
+                <span className="px-4 bg-card/80 backdrop-blur-sm text-muted-foreground font-medium">
                   🔒 Secure authentication powered by Microsoft Entra ID
                 </span>
               </div>
@@ -188,10 +188,10 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-8 text-center space-y-3">
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               By signing in, you agree to our terms of service and privacy policy.
             </p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground/70">
               Contact your IT administrator if you need access to this application.
             </p>
           </div>
@@ -200,8 +200,8 @@ export default function LoginPage() {
 
       {/* Footer */}
       <div className="mt-16 relative z-10 text-center">
-        <p className="text-sm text-gray-500">
-          Powered by <span className="font-semibold text-pink-600">TextiNG</span> • 
+        <p className="text-sm text-muted-foreground">
+          Powered by <span className="font-semibold text-primary">TextiNG</span> • 
           Secure • Reliable • Professional
         </p>
       </div>
