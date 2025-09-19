@@ -38,7 +38,10 @@ class AzureADService {
   private async makeGraphRequest(endpoint: string): Promise<any> {
     const accessToken = await this.getAccessToken();
     
-    const response = await fetch(`https://graph.microsoft.com/v1.0${endpoint}`, {
+    const url = `https://graph.microsoft.com/v1.0${endpoint}`;
+    console.log(`Making Graph API request to: ${url}`);
+    
+    const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
@@ -46,6 +49,8 @@ class AzureADService {
     });
 
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Graph API error: ${response.status} ${response.statusText}`, errorText);
       throw new Error(`Graph API error: ${response.status} ${response.statusText}`);
     }
 
@@ -96,11 +101,16 @@ class AzureADService {
    */
   async getGroupMembers(groupId: string): Promise<GroupMember[]> {
     try {
-      const data = await this.makeGraphRequest(`/groups/${groupId}/members?$select=id,displayName,mail,mobilePhone,businessPhones,userPrincipalName&$filter=userType eq 'Member'`);
+      const data = await this.makeGraphRequest(`/groups/${groupId}/members?$select=id,displayName,mail,mobilePhone,businessPhones,userPrincipalName`);
       
       const members: GroupMember[] = [];
       
       for (const member of data.value || []) {
+        // Filter out non-user objects (like service principals, etc.)
+        if (!member.userPrincipalName || !member.displayName) {
+          continue;
+        }
+
         // Extract phone number from mobilePhone or businessPhones
         let phoneNumber: string | undefined;
         let hasPhoneNumber = false;
