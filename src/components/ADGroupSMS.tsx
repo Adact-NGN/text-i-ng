@@ -74,7 +74,11 @@ export function ADGroupSMS() {
         setHasMore(data.hasMore || false);
         setHasSearched(!!searchQuery);
       } else {
-        setError(data.error || "Failed to fetch groups");
+        if (data.code === "AUTH_EXPIRED") {
+          setError("Your session has expired. Please sign in again.");
+        } else {
+          setError(data.error || "Failed to fetch groups");
+        }
       }
     } catch (err) {
       setError("Failed to fetch groups");
@@ -115,6 +119,9 @@ export function ADGroupSMS() {
               allMembers.push(member);
             }
           }
+        } else if (data.code === "AUTH_EXPIRED") {
+          setError("Your session has expired. Please sign in again.");
+          return;
         }
       }
       

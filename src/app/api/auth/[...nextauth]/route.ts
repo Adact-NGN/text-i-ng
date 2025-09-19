@@ -29,7 +29,9 @@ declare module "next-auth" {
   
   interface JWT {
     accessToken?: string;
+    refreshToken?: string;
     idToken?: string;
+    expiresAt?: number;
   }
 }
 
@@ -114,7 +116,10 @@ export const authOptions = {
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
         token.idToken = account.id_token;
+        // Calculate expiration time (access tokens typically expire in 1 hour)
+        token.expiresAt = account.expires_at ? account.expires_at * 1000 : Date.now() + 3600000;
       }
       if (profile) {
         const azureProfile = profile as AzureADProfile;

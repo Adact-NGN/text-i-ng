@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { azureAdService } from "@/lib/azureAdService";
 import { addMessage } from "@/lib/messageStorage";
+import { withAuth } from "@/lib/authMiddleware";
 import { Twilio } from "twilio";
 
 const client = new Twilio(
@@ -8,7 +9,7 @@ const client = new Twilio(
   process.env.TWILIO_AUTH_TOKEN!
 );
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest, accessToken: string) => {
   try {
     const body = await request.json();
     const { groupIds, message, fromName } = body;
@@ -126,4 +127,4 @@ export async function POST(request: NextRequest) {
       error: error instanceof Error ? error.message : "Failed to send SMS to AD groups",
     }, { status: 500 });
   }
-}
+});

@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getValidAccessToken } from "./tokenRefresh";
 
 export interface AzureADUser {
   id: string;
@@ -26,13 +27,12 @@ export interface GroupMember {
 
 class AzureADService {
   private async getAccessToken(): Promise<string> {
-    const session = await getServerSession(authOptions);
-    
-    if (!session?.accessToken) {
-      throw new Error("No valid session or access token found");
+    try {
+      return await getValidAccessToken();
+    } catch (error) {
+      console.error("Error getting valid access token:", error);
+      throw new Error("Authentication failed. Please sign in again.");
     }
-    
-    return session.accessToken as string;
   }
 
   private async makeGraphRequest(endpoint: string): Promise<any> {

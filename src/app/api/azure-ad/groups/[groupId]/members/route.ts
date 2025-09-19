@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { azureAdService } from "@/lib/azureAdService";
+import { withAuth } from "@/lib/authMiddleware";
 
-export async function GET(
+export const GET = withAuth(async (
   request: NextRequest,
+  accessToken: string,
   { params }: { params: { groupId: string } }
-) {
+) => {
   try {
     const { groupId } = params;
 
@@ -43,4 +45,4 @@ export async function GET(
       total: 0,
     }, { status: 500 });
   }
-}
+});

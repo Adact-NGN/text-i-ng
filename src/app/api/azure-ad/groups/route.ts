@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { azureAdService } from "@/lib/azureAdService";
+import { withAuth } from "@/lib/authMiddleware";
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest, accessToken: string) => {
   try {
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get("search");
@@ -51,4 +52,4 @@ export async function GET(request: NextRequest) {
       hasMore: false,
     }, { status: 500 });
   }
-}
+});
