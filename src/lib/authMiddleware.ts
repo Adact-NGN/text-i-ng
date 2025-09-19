@@ -9,11 +9,16 @@ export function withAuth(handler: (request: NextRequest, accessToken: string, ..
     } catch (error) {
       console.error("Authentication error:", error);
       
-      if (error instanceof Error && error.message.includes("sign in again")) {
+      if (error instanceof Error && (
+        error.message.includes("expired") || 
+        error.message.includes("sign in again") ||
+        error.message.includes("invalid")
+      )) {
         return NextResponse.json({
           success: false,
-          error: "Authentication expired. Please sign in again.",
-          code: "AUTH_EXPIRED"
+          error: "Your session has expired. Please sign in again.",
+          code: "TOKEN_EXPIRED",
+          requiresReauth: true
         }, { status: 401 });
       }
       

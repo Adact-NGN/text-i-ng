@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Users, Search, Send, AlertCircle, CheckCircle, Phone, Mail } from "lucide-react";
+import { useAuthError } from "@/hooks/useAuthError";
 
 interface AzureADGroup {
   id: string;
@@ -42,6 +43,7 @@ export function ADGroupSMS() {
   const [success, setSuccess] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const { authError, handleAuthError, clearAuthError } = useAuthError();
 
   // Fetch groups on component mount
   useEffect(() => {
@@ -74,8 +76,8 @@ export function ADGroupSMS() {
         setHasMore(data.hasMore || false);
         setHasSearched(!!searchQuery);
       } else {
-        if (data.code === "AUTH_EXPIRED") {
-          setError("Your session has expired. Please sign in again.");
+        if (handleAuthError(data)) {
+          return; // Auth error handled, don't set regular error
         } else {
           setError(data.error || "Failed to fetch groups");
         }
@@ -119,9 +121,8 @@ export function ADGroupSMS() {
               allMembers.push(member);
             }
           }
-        } else if (data.code === "AUTH_EXPIRED") {
-          setError("Your session has expired. Please sign in again.");
-          return;
+        } else if (handleAuthError(data)) {
+          return; // Auth error handled
         }
       }
       
@@ -459,7 +460,25 @@ export function ADGroupSMS() {
           </CardContent>
         </Card>
 
-        {/* Error/Success Messages */}
+        {/* Auth Error Message */}
+        {authError && (
+          <Card className="border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/20">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="h-5 w-5 text-amber-500 mt-0.5" />
+                <div>
+                  <h4 className="font-medium text-amber-800 dark:text-amber-200">Session Expired</h4>
+                  <p className="text-sm text-amber-700 dark:text-amber-300">{authError}</p>
+                  <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                    Redirecting to sign out in a few seconds...
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Regular Error/Success Messages */}
         {error && (
           <Card className="border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-950/20">
             <CardContent className="pt-6">
