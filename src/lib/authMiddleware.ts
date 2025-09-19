@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getValidAccessToken } from "./tokenRefresh";
 
-export async function withAuth(handler: (request: NextRequest, accessToken: string) => Promise<NextResponse>) {
-  return async (request: NextRequest) => {
+export function withAuth(handler: (request: NextRequest, accessToken: string, ...args: any[]) => Promise<NextResponse>) {
+  return async (request: NextRequest, ...args: any[]) => {
     try {
       const accessToken = await getValidAccessToken();
-      return await handler(request, accessToken);
+      return await handler(request, accessToken, ...args);
     } catch (error) {
       console.error("Authentication error:", error);
       
