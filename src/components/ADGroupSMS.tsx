@@ -40,6 +40,8 @@ export function ADGroupSMS() {
   const [fromName, setFromName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
 
   // Fetch groups on component mount
   useEffect(() => {
@@ -55,16 +57,22 @@ export function ADGroupSMS() {
     }
   }, [selectedGroups]);
 
-  const fetchGroups = async () => {
+  const fetchGroups = async (searchQuery?: string) => {
     setIsLoading(true);
     setError(null);
     
     try {
-      const response = await fetch("/api/azure-ad/groups");
+      const url = searchQuery 
+        ? `/api/azure-ad/groups?search=${encodeURIComponent(searchQuery)}&pageSize=50`
+        : "/api/azure-ad/groups?pageSize=50";
+        
+      const response = await fetch(url);
       const data = await response.json();
       
       if (data.success) {
         setGroups(data.groups);
+        setHasMore(data.hasMore || false);
+        setHasSearched(!!searchQuery);
       } else {
         setError(data.error || "Failed to fetch groups");
       }
@@ -73,6 +81,20 @@ export function ADGroupSMS() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    if (searchTerm.trim().length >= 3) {
+      fetchGroups(searchTerm.trim());
+    } else {
+      setError("Please enter at least 3 characters to search");
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm("");
+    setHasSearched(false);
+    fetchGroups();
   };
 
   const fetchGroupMembers = async () => {
@@ -158,9 +180,7 @@ export function ADGroupSMS() {
     }
   };
 
-  const filteredGroups = groups.filter(group =>
-    group.displayName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Remove client-side filtering since we now search server-side
 
   const membersWithPhone = selectedGroupMembers.filter(member => member.hasPhoneNumber);
   const membersWithoutPhone = selectedGroupMembers.filter(member => !member.hasPhoneNumber);
@@ -178,16 +198,40 @@ export function ADGroupSMS() {
         {/* Search Groups */}
         <div className="space-y-2">
           <Label htmlFor="search">Search Groups</Label>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              id="search"
-              placeholder="Search for groups..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                id="search"
+                placeholder="Enter at least 3 characters to search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                className="pl-10"
+              />
+            </div>
+            <Button 
+              onClick={handleSearch} 
+              disabled={searchTerm.trim().length < 3 || isLoading}
+              variant="outline"
+            >
+              {isLoading ? "Searching..." : "Search"}
+            </Button>
+            {hasSearched && (
+              <Button 
+                onClick={handleClearSearch} 
+                variant="outline"
+                disabled={isLoading}
+              >
+                Clear
+              </Button>
+            )}
           </div>
+          {searchTerm.trim().length > 0 && searchTerm.trim().length < 3 && (
+            <p className="text-sm text-amber-600">
+              Enter at least 3 characters to search
+            </p>
+          )}
         </div>
 
         {/* Groups List */}
@@ -195,16 +239,27 @@ export function ADGroupSMS() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              Available Groups
+              {hasSearched ? `Search Results` : `Available Groups`}
               {isLoading && <span className="text-sm text-muted-foreground">(Loading...)</span>}
             </CardTitle>
             <CardDescription>
-              Select one or more groups to send SMS to their members
+              {hasSearched 
+                ? `Found ${groups.length} groups matching "${searchTerm}"`
+                : "Select one or more groups to send SMS to their members"
+              }
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-2 max-h-60 overflow-y-auto">
-              {filteredGroups.map((group) => (
+              {groups.length === 0 && !isLoading ? (
+                <div className="text-center py-8 text-muted-foreground">
+                  {hasSearched 
+                    ? `No groups found matching "${searchTerm}"`
+                    : "No groups available"
+                  }
+                </div>
+              ) : (
+                groups.map((group) => (
                 <div
                   key={group.id}
                   className={`p-3 border rounded-lg cursor-pointer transition-colors ${
@@ -238,7 +293,8 @@ export function ADGroupSMS() {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))
+              )}
             </div>
           </CardContent>
         </Card>

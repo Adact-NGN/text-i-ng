@@ -6,30 +6,38 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get("search");
     const type = searchParams.get("type") || "all"; // all, security, distribution
+    const pageSize = parseInt(searchParams.get("pageSize") || "50");
 
-    let groups;
+    let result;
 
-    if (searchTerm) {
-      groups = await azureAdService.searchGroups(searchTerm);
+    if (searchTerm && searchTerm.trim().length >= 3) {
+      // Use the new getAllGroups method with search
+      result = await azureAdService.getAllGroups(searchTerm.trim(), pageSize);
     } else {
+      // Use the old methods for backward compatibility
+      let groups;
       switch (type) {
         case "security":
           groups = await azureAdService.getSecurityGroups();
+          result = { groups, hasMore: false };
           break;
         case "distribution":
           groups = await azureAdService.getDistributionGroups();
+          result = { groups, hasMore: false };
           break;
         case "all":
         default:
-          groups = await azureAdService.getAllGroups();
+          result = await azureAdService.getAllGroups(undefined, pageSize);
           break;
       }
     }
 
     return NextResponse.json({
       success: true,
-      groups,
-      total: groups.length,
+      groups: result.groups,
+      total: result.groups.length,
+      hasMore: result.hasMore,
+      nextLink: result.nextLink,
     });
 
   } catch (error) {
@@ -40,6 +48,7 @@ export async function GET(request: NextRequest) {
       error: error instanceof Error ? error.message : "Failed to fetch groups",
       groups: [],
       total: 0,
+      hasMore: false,
     }, { status: 500 });
   }
 }

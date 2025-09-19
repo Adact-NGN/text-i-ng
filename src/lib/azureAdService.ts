@@ -84,12 +84,26 @@ class AzureADService {
   }
 
   /**
-   * Get all groups (both security and distribution)
+   * Get all groups (both security and distribution) with pagination
    */
-  async getAllGroups(): Promise<AzureADGroup[]> {
+  async getAllGroups(searchTerm?: string, pageSize: number = 50): Promise<{ groups: AzureADGroup[]; hasMore: boolean; nextLink?: string }> {
     try {
-      const data = await this.makeGraphRequest('/groups?$select=id,displayName,description,mail,securityEnabled');
-      return data.value || [];
+      let endpoint = '/groups?$select=id,displayName,description,mail,securityEnabled';
+      
+      if (searchTerm && searchTerm.trim().length >= 3) {
+        const encodedSearch = encodeURIComponent(searchTerm.trim());
+        endpoint += `&$filter=startswith(displayName,'${encodedSearch}')`;
+      }
+      
+      endpoint += `&$top=${pageSize}`;
+      
+      const data = await this.makeGraphRequest(endpoint);
+      
+      return {
+        groups: data.value || [],
+        hasMore: !!data['@odata.nextLink'],
+        nextLink: data['@odata.nextLink']
+      };
     } catch (error) {
       console.error("Error fetching all groups:", error);
       throw new Error("Failed to fetch groups");
