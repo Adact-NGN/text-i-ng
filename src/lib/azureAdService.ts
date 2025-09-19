@@ -40,6 +40,7 @@ class AzureADService {
     
     const url = `https://graph.microsoft.com/v1.0${endpoint}`;
     console.log(`Making Graph API request to: ${url}`);
+    console.log(`Access token (first 20 chars): ${accessToken.substring(0, 20)}...`);
     
     const response = await fetch(url, {
       headers: {
@@ -47,6 +48,8 @@ class AzureADService {
         'Content-Type': 'application/json',
       },
     });
+
+    console.log(`Graph API response status: ${response.status} ${response.statusText}`);
 
     if (!response.ok) {
       const errorText = await response.text();

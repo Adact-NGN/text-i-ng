@@ -11,6 +11,13 @@ interface RefreshTokenResponse {
 export async function getValidAccessToken(): Promise<string> {
   const session = await getServerSession(authOptions);
   
+  console.log("Session debug:", {
+    hasSession: !!session,
+    hasAccessToken: !!session?.accessToken,
+    tokenLength: session?.accessToken?.length || 0,
+    userEmail: session?.user?.email
+  });
+  
   if (!session?.accessToken) {
     throw new Error("No valid session or access token found");
   }
