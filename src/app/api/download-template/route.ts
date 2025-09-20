@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
         "Content-Type":
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "Content-Disposition": 'attachment; filename="sms-template.xlsx"',
-        "Content-Length": excelBuffer.length.toString(),
+        "Content-Length": Buffer.byteLength(excelBuffer).toString(),
       },
     });
   } catch (error) {
