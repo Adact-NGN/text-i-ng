@@ -28,7 +28,7 @@
     }
   },
   "forwardPorts": [3000],
-  "postCreateCommand": "npm install && npm install -g @aikidosec/cli",
+  "postCreateCommand": "npm install",
   "remoteUser": "node",
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
