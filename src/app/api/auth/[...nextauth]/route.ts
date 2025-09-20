@@ -1,19 +1,6 @@
 import NextAuth from "next-auth";
 import AzureADProvider from "next-auth/providers/azure-ad";
 
-// Extend the Profile type to include Azure AD specific properties
-interface AzureADProfile {
-  email?: string;
-  name?: string;
-  picture?: string;
-  sub?: string;
-  upn?: string;
-  preferred_username?: string;
-  unique_name?: string;
-  phone_number?: string;
-  mobile_phone?: string;
-}
-
 // Extend the Session and JWT types to include custom properties
 declare module "next-auth" {
   interface Session {
@@ -26,7 +13,7 @@ declare module "next-auth" {
       phone?: string | null;
     };
   }
-  
+
   interface JWT {
     accessToken?: string;
     refreshToken?: string;
@@ -35,19 +22,19 @@ declare module "next-auth" {
   }
 }
 
-// Optional: Domain-based authorization (if you want to restrict to specific domains)
+// Optional: Domain-based authorization
 const AUTHORIZED_DOMAINS =
   process.env.AUTHORIZED_DOMAINS?.split(",").map((domain) => domain.trim()) ||
   [];
 
 // Function to check if user is authorized
-function isUserAuthorized(user: AzureADProfile): boolean {
+function isUserAuthorized(user: any): boolean {
   // If no domain restrictions are configured, allow all authenticated users
   if (AUTHORIZED_DOMAINS.length === 0) {
     return true;
   }
 
-  // Get user identifier - check multiple possible fields from Azure AD
+  // Get user identifier
   const userIdentifier =
     user.email || user.upn || user.preferred_username || user.unique_name;
 
@@ -78,88 +65,70 @@ export const authOptions = {
       tenantId: process.env.AZURE_AD_TENANT_ID!,
       authorization: {
         params: {
-          scope: "openid profile email User.Read Group.Read.All GroupMember.Read.All",
+          scope:
+            "openid profile email User.Read Group.Read.All GroupMember.Read.All",
         },
       },
     }),
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      // Cast profile to our extended type
-      const azureProfile = profile as AzureADProfile;
-      
-      // Log the full profile for debugging
-      console.log("Azure AD Profile received:", {
-        email: azureProfile?.email,
-        upn: azureProfile?.upn,
-        preferred_username: azureProfile?.preferred_username,
-        unique_name: azureProfile?.unique_name,
-        name: azureProfile?.name,
-        sub: azureProfile?.sub,
-      });
+      console.log("SignIn callback:", { user, account, profile });
 
       // Check if user is authorized to access the application
-      if (isUserAuthorized(azureProfile || user)) {
+      if (isUserAuthorized(profile || user)) {
         return true;
       }
 
-      // Log unauthorized access attempt with all available identifiers
+      // Log unauthorized access attempt
       const userIdentifier =
         user.email ||
-        azureProfile?.upn ||
-        azureProfile?.preferred_username ||
-        azureProfile?.unique_name;
+        profile?.upn ||
+        profile?.preferred_username ||
+        profile?.unique_name;
       console.log(`Unauthorized access attempt from: ${userIdentifier}`);
       return false;
     },
     async jwt({ token, account, profile }) {
-      // Persist the OAuth access_token and or the user id to the token right after signin
+      console.log("JWT callback:", {
+        hasAccount: !!account,
+        hasProfile: !!profile,
+        tokenSub: token.sub,
+      });
+
+      // Persist the OAuth access_token to the token
       if (account) {
+        console.log("Setting account tokens");
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.idToken = account.id_token;
-        // Calculate expiration time (access tokens typically expire in 1 hour)
-        token.expiresAt = account.expires_at ? account.expires_at * 1000 : Date.now() + 3600000;
+        token.expiresAt = account.expires_at
+          ? account.expires_at * 1000
+          : Date.now() + 3600000;
       }
       if (profile) {
-        const azureProfile = profile as AzureADProfile;
-        token.name = azureProfile.name;
-        token.email = azureProfile.email;
-        token.picture = azureProfile.picture;
-        token.phone = azureProfile.phone_number || azureProfile.mobile_phone;
+        console.log("Setting profile data");
+        token.name = profile.name;
+        token.email = profile.email;
+        token.picture = profile.picture;
+        token.phone = profile.phone_number || profile.mobile_phone;
       }
       return token;
     },
     async session({ session, token }) {
-      // Send properties to the client, like an access_token and user id from a provider.
+      // Send properties to the client
       session.accessToken = token.accessToken as string;
       session.user.id = token.sub as string;
       session.user.phone = token.phone as string;
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // If user is trying to access login page and is already authenticated, redirect to home
-      if (url.includes('/login')) {
-        return baseUrl;
-      }
-      
-      // If it's a relative URL, make it absolute
-      if (url.startsWith('/')) {
-        return `${baseUrl}${url}`;
-      }
-      
-      // If it's the same origin, allow it
-      if (url.startsWith(baseUrl)) {
-        return url;
-      }
-      
-      // For external URLs, redirect to home
-      if (url.startsWith('http')) {
-        return baseUrl;
-      }
-      
-      // Default to home page
-      return baseUrl;
+      console.log("NextAuth redirect callback:", { url, baseUrl });
+
+      // Force redirect to home page after successful login
+      const redirectUrl = baseUrl;
+      console.log("Redirecting to:", redirectUrl);
+      return redirectUrl;
     },
   },
   pages: {

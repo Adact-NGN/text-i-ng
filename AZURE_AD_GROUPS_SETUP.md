@@ -5,6 +5,7 @@ This feature allows you to send SMS messages to members of Azure AD groups by se
 ## Prerequisites
 
 1. **Azure AD App Registration** with the following permissions:
+
    - `User.Read` - Read user profiles
    - `Group.Read.All` - Read all groups
    - `GroupMember.Read.All` - Read group members
@@ -20,6 +21,7 @@ This feature allows you to send SMS messages to members of Azure AD groups by se
 1. **Navigate to Azure Portal** → Azure Active Directory → App registrations → Your TextiNG app
 
 2. **Add API Permissions**:
+
    - Go to "API permissions"
    - Click "Add a permission"
    - Select "Microsoft Graph"
@@ -53,6 +55,7 @@ NEXTAUTH_SECRET=your_nextauth_secret_here
 For users to receive SMS messages, they need phone numbers in their Azure AD profiles:
 
 1. **Admin Setup** (Recommended):
+
    - Go to Azure Portal → Azure Active Directory → Users
    - Select a user → Profile
    - Add "Mobile phone" or "Business phone"
@@ -66,17 +69,20 @@ For users to receive SMS messages, they need phone numbers in their Azure AD pro
 ## How It Works
 
 ### 1. Group Selection
+
 - Browse and search through available Azure AD groups
 - Select one or multiple groups
 - View group type (Security vs Distribution)
 
 ### 2. Member Preview
+
 - Automatically fetch group members
 - Show members with phone numbers (will receive SMS)
 - Show members without phone numbers (won't receive SMS)
 - Deduplicate users who are in multiple groups
 
 ### 3. SMS Sending
+
 - Send SMS to all members with phone numbers
 - Track success/failure for each member
 - Store message history with user information
@@ -85,18 +91,21 @@ For users to receive SMS messages, they need phone numbers in their Azure AD pro
 ## Features
 
 ### Group Management
+
 - **Search Groups**: Find groups by name
 - **Group Types**: Support for both Security and Distribution groups
 - **Multiple Selection**: Select multiple groups at once
 - **Member Preview**: See who will receive messages before sending
 
 ### Phone Number Detection
+
 - **Mobile Phone**: Primary phone number from Azure AD
 - **Business Phone**: Fallback to business phone numbers
 - **Validation**: Only users with phone numbers can receive SMS
 - **Deduplication**: Users in multiple groups are only contacted once
 
 ### SMS Features
+
 - **Custom Sender ID**: Use alphanumeric sender ID (max 11 characters)
 - **Message Tracking**: Full message history with user details
 - **Error Handling**: Detailed error reporting for failed messages
@@ -105,21 +114,25 @@ For users to receive SMS messages, they need phone numbers in their Azure AD pro
 ## Usage
 
 ### 1. Access AD Groups SMS
+
 - Go to SMS Management page
 - Click on "AD Groups" tab
 - The interface will load available groups
 
 ### 2. Select Groups
+
 - Use the search bar to find specific groups
 - Click on groups to select them
 - View selected groups in the summary
 
 ### 3. Preview Members
+
 - See how many members have phone numbers
 - Review members who will receive SMS
 - Check members without phone numbers
 
 ### 4. Compose and Send
+
 - Write your SMS message
 - Optionally set a custom sender ID
 - Click "Send SMS" to deliver messages
@@ -127,16 +140,19 @@ For users to receive SMS messages, they need phone numbers in their Azure AD pro
 ## Security Considerations
 
 ### Permissions
+
 - **Delegated Permissions**: Uses the current user's permissions
 - **Admin Consent Required**: Group permissions require admin consent
 - **Scope Limitation**: Only accesses groups the user can see
 
 ### Data Privacy
+
 - **Phone Number Access**: Only accesses phone numbers from Azure AD
 - **No Data Storage**: Phone numbers are not stored permanently
 - **Audit Trail**: All SMS activities are logged
 
 ### Access Control
+
 - **Azure AD Authorization**: Uses existing Azure AD user management
 - **Group Visibility**: Only shows groups the user has access to
 - **Member Privacy**: Respects Azure AD privacy settings
@@ -146,16 +162,19 @@ For users to receive SMS messages, they need phone numbers in their Azure AD pro
 ### Common Issues
 
 1. **"No groups found"**
+
    - Check if user has access to groups in Azure AD
    - Verify Group.Read.All permission is granted
    - Ensure admin consent is provided
 
 2. **"No members with phone numbers"**
+
    - Check if users have phone numbers in Azure AD
    - Verify phone numbers are in correct format
    - Ensure users have updated their profiles
 
 3. **"Permission denied"**
+
    - Verify GroupMember.Read.All permission
    - Check if admin consent is granted
    - Ensure user has access to selected groups
@@ -176,10 +195,12 @@ NEXTAUTH_DEBUG=true
 ### Testing
 
 1. **Test Group Access**:
+
    - Verify you can see groups in the interface
    - Check if group members are loaded correctly
 
 2. **Test Phone Numbers**:
+
    - Ensure test users have phone numbers in Azure AD
    - Verify phone number format is correct
 

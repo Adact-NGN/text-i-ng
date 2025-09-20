@@ -1,41 +1,15 @@
 "use client";
 
-import { signIn, getSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Logo } from "@/components/Logo";
+import { useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const errorParam = searchParams.get("error");
-
-  useEffect(() => {
-    // Check if user is already authenticated
-    const checkSession = async () => {
-      try {
-        const session = await getSession();
-        if (session) {
-          // Use router.push for better navigation handling
-          router.push("/");
-          router.refresh();
-        }
-      } catch (error) {
-        console.error("Session check failed:", error);
-      }
-    };
-    
-    // Check immediately
-    checkSession();
-    
-    // Also check periodically in case session is established after page load
-    const interval = setInterval(checkSession, 2000);
-    
-    return () => clearInterval(interval);
-  }, [router]);
 
   useEffect(() => {
     // Handle authentication errors
@@ -67,29 +41,20 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const result = await signIn("azure-ad", {
-        redirect: false,
+      // Use NextAuth signIn with automatic redirect
+      await signIn("azure-ad", {
         callbackUrl: "/",
+        redirect: true,
       });
-
-      if (result?.error) {
-        setError("Authentication failed. Please try again.");
-        console.error("Authentication error:", result.error);
-      } else if (result?.ok) {
-        // Use router for better navigation
-        router.push("/");
-        router.refresh();
-      }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
-    } finally {
+      console.error("Sign in error:", err);
       setIsLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen w-full bg-background flex flex-col justify-center py-12 px-0 relative">
-
       <div className="relative z-10 mx-auto w-full max-w-md px-6">
         <div className="text-center space-y-4">
           <h2 className="text-4xl font-bold text-foreground animate-fade-in hover:scale-105 transition-transform duration-300">
@@ -123,7 +88,9 @@ export default function LoginPage() {
                   <h3 className="text-sm font-semibold text-destructive">
                     Authentication Error
                   </h3>
-                  <div className="mt-2 text-sm text-destructive/80">{error}</div>
+                  <div className="mt-2 text-sm text-destructive/80">
+                    {error}
+                  </div>
                 </div>
               </div>
             </div>
@@ -189,10 +156,12 @@ export default function LoginPage() {
 
           <div className="mt-8 text-center space-y-3">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              By signing in, you agree to our terms of service and privacy policy.
+              By signing in, you agree to our terms of service and privacy
+              policy.
             </p>
             <p className="text-xs text-muted-foreground/70">
-              Contact your IT administrator if you need access to this application.
+              Contact your IT administrator if you need access to this
+              application.
             </p>
           </div>
         </div>
@@ -201,8 +170,8 @@ export default function LoginPage() {
       {/* Footer */}
       <div className="mt-16 relative z-10 text-center">
         <p className="text-sm text-muted-foreground">
-          Powered by <span className="font-semibold text-primary">TextiNG</span> • 
-          Secure • Reliable • Professional
+          Powered by <span className="font-semibold text-primary">TextiNG</span>{" "}
+          • Secure • Reliable • Professional
         </p>
       </div>
     </div>
