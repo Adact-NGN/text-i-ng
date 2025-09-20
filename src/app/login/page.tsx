@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 // Force dynamic rendering to avoid Suspense issues with useSearchParams
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +14,7 @@ export default function LoginPage() {
     // Handle authentication errors from URL params
     const urlParams = new URLSearchParams(window.location.search);
     const errorParam = urlParams.get("error");
-    
+
     if (errorParam) {
       switch (errorParam) {
         case "AccessDenied":
