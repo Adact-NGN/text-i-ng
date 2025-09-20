@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,25 +24,27 @@ export async function GET(request: NextRequest) {
     ];
 
     // Create a new workbook and worksheet
-    const workbook = XLSX.utils.book_new();
-    const worksheet = XLSX.utils.json_to_sheet(templateData);
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("SMS Recipients");
 
-    // Set column widths
-    const columnWidths = [
-      { wch: 15 }, // Phone Number
-      { wch: 30 }, // Message
-      { wch: 15 }, // Sender ID
+    // Set column headers and widths
+    worksheet.columns = [
+      { header: "Phone Number", key: "phoneNumber", width: 15 },
+      { header: "Message", key: "message", width: 30 },
+      { header: "Sender ID", key: "senderId", width: 15 },
     ];
-    worksheet["!cols"] = columnWidths;
 
-    // Add the worksheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, "SMS Recipients");
+    // Add data rows
+    templateData.forEach((row) => {
+      worksheet.addRow({
+        phoneNumber: row["Phone Number"],
+        message: row.Message,
+        senderId: row["Sender ID"],
+      });
+    });
 
     // Generate Excel file buffer
-    const excelBuffer = XLSX.write(workbook, {
-      type: "buffer",
-      bookType: "xlsx",
-    });
+    const excelBuffer = await workbook.xlsx.writeBuffer();
 
     // Return the file as a download
     return new NextResponse(excelBuffer, {

@@ -28,7 +28,9 @@
     "@vercel/postgres": "^0.10.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cookie": "^1.0.2",
     "dotenv": "^17.2.2",
+    "exceljs": "^4.4.0",
     "lucide-react": "^0.544.0",
     "multer": "^2.0.2",
     "next": "15.5.3",
@@ -37,8 +39,7 @@
     "react-dom": "19.1.1",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
-    "twilio": "^4.19.0",
-    "xlsx": "^0.18.5"
+    "twilio": "^4.19.0"
   },
   "devDependencies": {
     "@types/node": "^20",

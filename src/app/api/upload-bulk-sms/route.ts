@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
 import twilio from "twilio";
 import { addMessage } from "@/lib/messageStorage";
 
@@ -33,12 +33,33 @@ export async function POST(request: NextRequest) {
 
     // Read the Excel file
     const buffer = await file.arrayBuffer();
-    const workbook = XLSX.read(buffer, { type: "buffer" });
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(buffer);
+    const worksheet = workbook.worksheets[0];
 
     // Convert to JSON
-    const data = XLSX.utils.sheet_to_json(worksheet);
+    const data: any[] = [];
+    const headerRow = worksheet.getRow(1);
+    const headers: string[] = [];
+    
+    // Get headers
+    headerRow.eachCell((cell, colNumber) => {
+      headers[colNumber - 1] = cell.text;
+    });
+
+    // Get data rows
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber > 1) { // Skip header row
+        const rowData: any = {};
+        row.eachCell((cell, colNumber) => {
+          const header = headers[colNumber - 1];
+          if (header) {
+            rowData[header] = cell.text;
+          }
+        });
+        data.push(rowData);
+      }
+    });
 
     // Validate the data structure
     if (data.length === 0) {
