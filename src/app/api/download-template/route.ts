@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   try {
     // Get the current user session
     const session = await getServerSession();
-    
+
     // Create sample data for the template with user-specific phone number
     const userPhoneNumber = session?.user?.phone || "+1234567890";
 
