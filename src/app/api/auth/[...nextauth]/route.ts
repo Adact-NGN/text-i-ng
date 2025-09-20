@@ -72,7 +72,7 @@ const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account, profile }: any) {
       console.log("SignIn callback:", { user, account, profile });
 
       // Check if user is authorized to access the application
@@ -89,7 +89,7 @@ const authOptions = {
       console.log(`Unauthorized access attempt from: ${userIdentifier}`);
       return false;
     },
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account, profile }: any) {
       console.log("JWT callback:", {
         hasAccount: !!account,
         hasProfile: !!profile,
@@ -115,14 +115,14 @@ const authOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       // Send properties to the client
       session.accessToken = token.accessToken as string;
       session.user.id = token.sub as string;
       session.user.phone = token.phone as string;
       return session;
     },
-    async redirect({ url, baseUrl }) {
+    async redirect({ url, baseUrl }: any) {
       console.log("NextAuth redirect callback:", { url, baseUrl });
 
       // Force redirect to home page after successful login
