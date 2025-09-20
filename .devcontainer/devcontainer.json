@@ -2,7 +2,11 @@
   "name": "Twilio SMS App",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true,
+      "version": "lts"
+    }
   },
   "customizations": {
     "vscode": {
@@ -11,7 +15,8 @@
         "esbenp.prettier-vscode",
         "ms-vscode.vscode-typescript-next",
         "formulahendry.auto-rename-tag",
-        "christian-kohler.path-intellisense"
+        "christian-kohler.path-intellisense",
+        "aikido-security.vscode-extension"
       ],
       "settings": {
         "editor.formatOnSave": true,
@@ -23,7 +28,7 @@
     }
   },
   "forwardPorts": [3000],
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "npm install && npm install -g @aikidosec/cli",
   "remoteUser": "node",
   "mounts": [
     "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
