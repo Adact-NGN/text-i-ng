@@ -2,20 +2,19 @@
 
 import { signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 // Force dynamic rendering to avoid Suspense issues with useSearchParams
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
-  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const errorParam = searchParams.get("error");
-
   useEffect(() => {
-    // Handle authentication errors
+    // Handle authentication errors from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get("error");
+    
     if (errorParam) {
       switch (errorParam) {
         case "AccessDenied":
@@ -37,7 +36,7 @@ export default function LoginPage() {
           break;
       }
     }
-  }, [errorParam]);
+  }, []);
 
   const handleSignIn = async () => {
     setIsLoading(true);
