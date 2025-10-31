@@ -57,7 +57,7 @@ function isUserAuthorized(user: any): boolean {
   return isAuthorized;
 }
 
-const authOptions = {
+export const authOptions = {
   providers: [
     AzureADProvider({
       clientId: process.env.AZURE_AD_CLIENT_ID!,

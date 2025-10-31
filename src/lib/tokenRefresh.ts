@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface RefreshTokenResponse {
   access_token: string;
@@ -8,7 +9,7 @@ interface RefreshTokenResponse {
 }
 
 export async function getValidAccessToken(): Promise<string> {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   
   console.log("Session debug:", {
     hasSession: !!session,
