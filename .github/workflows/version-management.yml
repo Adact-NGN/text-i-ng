@@ -1,16 +1,18 @@
 name: Version Management
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "src/**"
-      - "components/**"
-      - "app/**"
-      - "lib/**"
-  pull_request:
-    types: [closed]
-    branches: [main]
+  workflow_dispatch: # Manual trigger only
+  # Disabled automatic triggers temporarily to fix version issues
+  # push:
+  #   branches: [main]
+  #   paths:
+  #     - "src/**"
+  #     - "components/**"
+  #     - "app/**"
+  #     - "lib/**"
+  # pull_request:
+  #   types: [closed]
+  #   branches: [main]
 
 jobs:
   version-check:
