@@ -33,7 +33,7 @@
     "exceljs": "^4.4.0",
     "lucide-react": "^0.544.0",
     "multer": "^2.0.2",
-    "next": "15.5.9",
+    "next": "15.5.16",
     "next-auth": "^4.24.13",
     "oauth4webapi": "^3.8.1",
     "react": "19.1.1",
@@ -57,6 +57,7 @@
     "@types/react": "19.1.13",
     "@types/react-dom": "19.1.9",
     "oauth4webapi": "^3.8.1",
-    "jws@<=3.2.3": "3.2.3"
+    "jws@<=3.2.3": "3.2.3",
+    "brace-expansion@<=2.1.0": "2.1.0"
   }
 }
